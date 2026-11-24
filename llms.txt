@@ -1,0 +1,24 @@
+# Andy Menutti
+
+> Creative technologist, audio engineer and full-stack & AI developer in Buenos Aires, Argentina (GMT-3, open to remote). 25+ years of sound design and live audio for film, theatre, dance and festivals, now building with TypeScript, React, Next.js, Node.js, Ruby on Rails and the OpenAI and Anthropic APIs. Selected 1 of 300 from 32,000 applicants for the a16z × Y Combinator × Buildspace builder program (2024). Contact: menuttiandres@gmail.com · WhatsApp +54 11 3455 0050.
+
+Fits: Creative Technologist, audio/music AI engineer, full-stack engineer (TypeScript/React/Next.js/Rails), AI integration engineer (LLM apps, MCP servers), sound designer / audio UX.
+
+## Profile
+
+- [Full candidate profile (Markdown)](https://andresmenutti.vercel.app/profile.md): summary, skills, experience, projects, education, awards and contact.
+- [Résumé in JSON Resume format](https://andresmenutti.vercel.app/resume.json): the same data, structured for ATS and parsers.
+- [Interactive CV](https://andresmenutti.vercel.app/): career timeline in English and Spanish.
+
+## Project tours
+
+- [Pressdiction · Press Manager AI](https://andresmenutti.vercel.app/pressdiction/): press manager with live tone analysis; Next.js, PostgreSQL, 76 tests.
+- [AgentMe · Press Manager AI](https://andresmenutti.vercel.app/agentme/): LLM political communication agent; Next.js, Vercel AI SDK, Anthropic, OpenAI.
+- [Task Manager](https://andresmenutti.vercel.app/taskmanager/): Rails 8 API + Next.js 16, Docker, 23 tests.
+- [Blue Dreams](https://andresmenutti.vercel.app/bluedreams/): React/Redux + Rails API with JWT auth, built by a remote team of five.
+
+## Links
+
+- [GitHub](https://github.com/andym80)
+- [LinkedIn](https://www.linkedin.com/in/andres-menutti)
+- [Argentina Election Map (live)](https://argentina-election-map.vercel.app)

@@ -1,0 +1,248 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
+  "basics": {
+    "name": "Andy (Andrés) Menutti",
+    "label": "Creative Technologist · Audio Engineer · Full-Stack & AI Developer",
+    "email": "menuttiandres@gmail.com",
+    "phone": "+54 11 3455 0050",
+    "url": "https://andresmenutti.vercel.app",
+    "summary": "Creative technologist with 25+ years in sound design and audio engineering (theatre, dance, film, live festival audio) and a deliberate move into full-stack and AI development. Builds audio systems that combine acoustic engineering, hardware integration and modern software (TypeScript, React, Next.js, Node.js, Ruby on Rails, OpenAI and Anthropic APIs). Selected 1 of 300 from 32,000 applicants for the a16z × Y Combinator × Buildspace builder program.",
+    "location": {
+      "city": "Buenos Aires",
+      "countryCode": "AR",
+      "region": "Buenos Aires"
+    },
+    "profiles": [
+      {
+        "network": "GitHub",
+        "username": "andym80",
+        "url": "https://github.com/andym80"
+      },
+      {
+        "network": "LinkedIn",
+        "username": "andres-menutti",
+        "url": "https://www.linkedin.com/in/andres-menutti"
+      }
+    ]
+  },
+  "work": [
+    {
+      "name": "OMNI (own project)",
+      "position": "Founder / Lead Builder",
+      "startDate": "2022",
+      "summary": "Generative AI sound installation with custom ceramic speakers funded by Argentina's Fondo Nacional de las Artes.",
+      "highlights": [
+        "Surface exciters in ceramic discs, ESP32 capacitive sensor arrays and a generative engine using OpenAI and Anthropic APIs.",
+        "Reliability planning for unattended public exhibition.",
+        "RIPPLE//OMNI permanent installation submitted to the Sónar+D / Fundación Cotec KNOWCASE Open Call 2027."
+      ]
+    },
+    {
+      "name": "a16z × Y Combinator × Buildspace",
+      "position": "Selected Builder (6-week program)",
+      "startDate": "2024",
+      "endDate": "2024",
+      "highlights": [
+        "1 of 300 projects from 32,000 applicants; took OMNI from concept to a demo-ready build against weekly milestones."
+      ]
+    },
+    {
+      "name": "Independent",
+      "position": "Developer — MCP servers and AI-integrated tooling",
+      "startDate": "2023",
+      "highlights": [
+        "MCP servers connecting Claude to Ableton Live (TypeScript) and the Akai MPC Live II (MIDI/USB).",
+        "OMNI Remote, a Next.js PWA for phone control of MPC and Ableton.",
+        "LLM apps for press management and political communication (Pressdiction, AgentMe)."
+      ]
+    },
+    {
+      "name": "Independent",
+      "position": "Sound Designer / Live Audio Engineer / Studio Owner",
+      "startDate": "2000",
+      "highlights": [
+        "Sound design, mixing and boom operation on 40+ films in Spain.",
+        "Composer and sound designer for 20+ theatre and contemporary dance productions; live sound design for Fuerza Bruta.",
+        "Live sound engineering at I Love Techno, Nature One and Awakenings.",
+        "Runs an audio studio in Buenos Aires and AMI Bookings, an artist management and booking agency."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Microverse",
+      "area": "Full-Stack Web Development",
+      "studyType": "Remote program",
+      "startDate": "2022",
+      "endDate": "2023"
+    },
+    {
+      "institution": "ECAM, Escuela de Cine de Madrid",
+      "area": "Film Sound",
+      "studyType": "Diploma",
+      "startDate": "2001",
+      "endDate": "2004"
+    }
+  ],
+  "awards": [
+    {
+      "title": "Grant",
+      "awarder": "Fondo Nacional de las Artes (Argentina)",
+      "date": "2021"
+    },
+    {
+      "title": "Plataforma Futuro",
+      "awarder": "Cultura Nación",
+      "date": "2017"
+    },
+    {
+      "title": "Mención Arte Sonoro",
+      "awarder": "UNA",
+      "date": "2015"
+    },
+    {
+      "title": "Grant",
+      "awarder": "Gobierno de la Ciudad de Buenos Aires",
+      "date": "2010"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Audio",
+      "keywords": [
+        "Sound design",
+        "Live audio engineering",
+        "Mixing",
+        "Spatial audio",
+        "Generative audio",
+        "Audio UX",
+        "Web Audio API"
+      ]
+    },
+    {
+      "name": "Hardware",
+      "keywords": [
+        "ESP32",
+        "Capacitive sensors",
+        "Acoustic transducers",
+        "MIDI/USB"
+      ]
+    },
+    {
+      "name": "Front end",
+      "keywords": [
+        "TypeScript",
+        "JavaScript",
+        "React",
+        "Next.js",
+        "Redux Toolkit",
+        "MUI",
+        "Tailwind CSS"
+      ]
+    },
+    {
+      "name": "Back end",
+      "keywords": [
+        "Node.js",
+        "Ruby on Rails",
+        "PostgreSQL",
+        "REST APIs",
+        "Docker"
+      ]
+    },
+    {
+      "name": "AI",
+      "keywords": [
+        "OpenAI API",
+        "Anthropic API",
+        "Vercel AI SDK",
+        "Model Context Protocol (MCP)",
+        "LLM apps",
+        "NLP"
+      ]
+    },
+    {
+      "name": "Testing",
+      "keywords": [
+        "Jest",
+        "RSpec",
+        "Minitest",
+        "TDD"
+      ]
+    }
+  ],
+  "languages": [
+    {
+      "language": "Spanish",
+      "fluency": "Native"
+    },
+    {
+      "language": "English",
+      "fluency": "Professional"
+    }
+  ],
+  "projects": [
+    {
+      "name": "Argentina Election Map",
+      "url": "https://argentina-election-map.vercel.app",
+      "keywords": [
+        "Next.js",
+        "TypeScript",
+        "Data viz"
+      ]
+    },
+    {
+      "name": "Pressdiction · Press Manager AI",
+      "url": "https://andresmenutti.vercel.app/pressdiction/",
+      "keywords": [
+        "Next.js",
+        "PostgreSQL",
+        "LLM",
+        "Tone analysis"
+      ]
+    },
+    {
+      "name": "AgentMe · Press Manager AI",
+      "url": "https://agent-me-nce8.vercel.app",
+      "keywords": [
+        "Next.js",
+        "Vercel AI SDK",
+        "Anthropic",
+        "OpenAI"
+      ]
+    },
+    {
+      "name": "Task Manager",
+      "url": "https://github.com/andym80/TasksRailsApi",
+      "keywords": [
+        "Ruby on Rails 8",
+        "Next.js 16",
+        "PostgreSQL",
+        "Docker"
+      ]
+    },
+    {
+      "name": "Blue Dreams",
+      "url": "https://andresmenutti.vercel.app/bluedreams/",
+      "keywords": [
+        "React",
+        "Redux",
+        "Rails",
+        "JWT"
+      ]
+    },
+    {
+      "name": "OMNI",
+      "keywords": [
+        "Generative audio",
+        "ESP32",
+        "Ceramic speakers",
+        "AI"
+      ]
+    }
+  ],
+  "meta": {
+    "canonical": "https://andresmenutti.vercel.app/resume.json",
+    "lastModified": "2026-11-24"
+  }
+}
