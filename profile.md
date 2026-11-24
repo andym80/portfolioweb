@@ -5,6 +5,7 @@
 - Email: menuttiandres@gmail.com
 - WhatsApp / phone: +54 11 3455 0050
 - Portfolio: https://andresmenutti.vercel.app
+- Résumé (PDF): https://andresmenutti.vercel.app/resume.pdf
 - GitHub: https://github.com/andym80
 - LinkedIn: https://www.linkedin.com/in/andres-menutti
 

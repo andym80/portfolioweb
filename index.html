@@ -177,6 +177,8 @@ button { font: inherit; color: inherit; }
 .contact a.wa { display: inline-flex; align-items: center; gap: 6px; color: var(--ink); background: var(--c-hw); text-decoration: none; padding: 5px 10px; border-radius: 6px; font-weight: 500; }
 .contact a.wa:hover { filter: brightness(1.1); }
 .contact a.wa svg { width: 14px; height: 14px; fill: currentColor; }
+.contact a.cvdl { color: var(--fg); text-decoration: none; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--panel-2); }
+.contact a.cvdl:hover { border-color: var(--fg); }
 .mail { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 6px; padding: 2px 3px 2px 10px; }
 .mail span { user-select: all; overflow-wrap: anywhere; }
 .copy { font-family: var(--f-mono); font-size: 0.7rem; background: var(--panel-2); border: 1px solid var(--line); border-radius: 4px; padding: 3px 8px; cursor: pointer; }
@@ -322,7 +324,7 @@ footer a:hover { border-color: var(--fg); }
   <section class="noscript-profile">
     <h2>Andy Menutti — Creative Technologist, Audio Engineer, Full-Stack &amp; AI Developer</h2>
     <p>Buenos Aires, Argentina (GMT-3), open to remote. 25+ years of sound design and live audio for film, theatre, dance and festivals; now building with TypeScript, React, Next.js, Node.js, Ruby on Rails and the OpenAI and Anthropic APIs. Selected 1 of 300 from 32,000 applicants for the a16z × Y Combinator × Buildspace program (2024).</p>
-    <p>Full profile: <a href="/profile.md">profile.md</a> · Résumé: <a href="/resume.json">resume.json</a> · <a href="https://github.com/andym80">GitHub</a> · <a href="https://www.linkedin.com/in/andres-menutti">LinkedIn</a> · menuttiandres@gmail.com · +54 11 3455 0050</p>
+    <p>Résumé: <a href="/resume.pdf">resume.pdf</a> · Full profile: <a href="/profile.md">profile.md</a> · <a href="/resume.json">resume.json</a> · <a href="https://github.com/andym80">GitHub</a> · <a href="https://www.linkedin.com/in/andres-menutti">LinkedIn</a> · menuttiandres@gmail.com · +54 11 3455 0050</p>
   </section>
 </noscript>
 
@@ -333,6 +335,7 @@ footer a:hover { border-color: var(--fg); }
       <p data-i18n="sub">Sound designer → audio engineer → full-stack &amp; AI builder · Buenos Aires</p>
       <div class="contact">
         <a class="wa" href="https://wa.me/5491134550050" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1a7 7 0 0 0-6 10.6L1 15l3.5-1A7 7 0 1 0 8 1zm3.6 9.6c-.2.5-.9.9-1.3.9-.4.1-.8.1-2.6-.6-2.2-.9-3.6-3.1-3.7-3.3-.1-.1-.9-1.2-.9-2.2s.6-1.6.8-1.8c.2-.2.4-.3.6-.3h.4c.1 0 .3 0 .5.4l.7 1.6c.1.1.1.3 0 .4l-.3.4-.3.3c-.1.1-.2.2-.1.4.1.2.6 1 1.3 1.6.9.8 1.6 1 1.8 1.1.2.1.4.1.5-.1l.6-.8c.2-.2.3-.2.5-.1l1.5.7c.2.1.4.2.4.3.1.1.1.6-.1 1.1z"/></svg>WhatsApp +54 11 3455 0050</a>
+        <a class="cvdl" href="/resume.pdf" download="Andy-Menutti-Resume.pdf" data-i18n="cvdl">Download CV (PDF)</a>
         <span class="mail"><span id="mail">menuttiandres@gmail.com</span><button class="copy" id="copy" type="button" data-i18n="copy">Copy</button></span>
       </div>
     </div>
@@ -640,7 +643,7 @@ footer a:hover { border-color: var(--fg); }
       s2h: 'Map the signal flow', s2p: 'Source, routing, output. Microphones and cues, or sensors, firmware and APIs.', s2a: 'Boom to final mix', s2b: 'Claude to MIDI/USB to MPC',
       s3h: 'Prototype against the clock', s3p: 'Rehearsals, changeovers and six-week sprints all reward fast, tested iterations.', s3a: 'Festival changeovers', s3b: 'TDD with Jest and RSpec',
       s4h: 'Ship for a live audience', s4p: 'There is no second take. Build for reliability and keep it running after opening night.', s4a: '24-month maintenance plan', s4b: 'Policy campaign for the scene',
-      keys: 'Space: play/pause · ← →: chapters', trk: 'TRACK', pH: 'Selected projects', pP: 'Live demo opens the running app. Code opens the public repository on GitHub.',
+      keys: 'Space: play/pause · ← →: chapters', trk: 'TRACK', cvdl: 'Download CV (PDF)', pH: 'Selected projects', pP: 'Live demo opens the running app. Code opens the public repository on GitHub.',
       ctx: 'Context', prob: 'Problem', sol: 'Solved by', carry: 'Carries forward:', ch: 'CH', soundOn: 'SOUND ON', soundOff: 'SOUND OFF', grant: 'Grant', solo: 'Solo',
     },
     es: {
@@ -654,7 +657,7 @@ footer a:hover { border-color: var(--fg); }
       s2h: 'Mapear el flujo de señal', s2p: 'Fuente, ruteo, salida. Micrófonos y cues, o sensores, firmware y APIs.', s2a: 'Del boom a la mezcla final', s2b: 'De Claude a MIDI/USB a la MPC',
       s3h: 'Prototipar contra reloj', s3p: 'Ensayos, cambios de escenario y sprints de seis semanas premian iteraciones rápidas y probadas.', s3a: 'Cambios de escenario en festivales', s3b: 'TDD con Jest y RSpec',
       s4h: 'Estrenar ante público en vivo', s4p: 'No hay segunda toma. Construir para que sea confiable y siga funcionando después del estreno.', s4a: 'Plan de mantenimiento de 24 meses', s4b: 'Campaña de política pública para la escena',
-      keys: 'Espacio: play/pausa · ← →: capítulos', trk: 'PISTA', pH: 'Proyectos seleccionados', pP: 'Ver demo abre la app funcionando. Código abre el repositorio público en GitHub.',
+      keys: 'Espacio: play/pausa · ← →: capítulos', trk: 'PISTA', cvdl: 'Descargar CV (PDF)', pH: 'Proyectos seleccionados', pP: 'Ver demo abre la app funcionando. Código abre el repositorio público en GitHub.',
       ctx: 'Contexto', prob: 'Problema', sol: 'Cómo lo resolví', carry: 'Lo que se lleva:', ch: 'CAP', soundOn: 'SONIDO ON', soundOff: 'SONIDO OFF', grant: 'Beca', solo: 'Solo',
     },
   };

@@ -7,6 +7,7 @@ Fits: Creative Technologist, audio/music AI engineer, full-stack engineer (TypeS
 ## Profile
 
 - [Full candidate profile (Markdown)](https://andresmenutti.vercel.app/profile.md): summary, skills, experience, projects, education, awards and contact.
+- [Résumé (PDF, 2 pages)](https://andresmenutti.vercel.app/resume.pdf): the same profile as a shareable document.
 - [Résumé in JSON Resume format](https://andresmenutti.vercel.app/resume.json): the same data, structured for ATS and parsers.
 - [Interactive CV](https://andresmenutti.vercel.app/): career timeline in English and Spanish.
 
