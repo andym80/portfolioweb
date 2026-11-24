@@ -173,6 +173,23 @@ button { font: inherit; color: inherit; }
 .step .eg span { display: flex; align-items: baseline; gap: 7px; }
 .step .eg span::before { content: ""; width: 7px; height: 7px; border-radius: 2px; background: var(--lane); flex: none; transform: translateY(-1px); }
 
+/* ---------- projects ---------- */
+.projects { display: flex; flex-direction: column; gap: 14px; }
+.projects h3 { margin: 6px 0 0; font-family: var(--f-display); font-weight: 800; font-size: 1.45rem; letter-spacing: -0.01em; text-wrap: balance; }
+.projects > p { margin: -6px 0 4px; color: var(--muted); max-width: 70ch; }
+.pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.pcard { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; transition: border-color 200ms; }
+.pcard:hover, .pcard:focus-within { border-color: var(--lane); }
+.pcard .chip { font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.pcard h4 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: 1.15rem; line-height: 1.2; }
+.pcard p { margin: 0; font-size: 0.88rem; color: var(--muted); flex: 1; }
+.pcard .stack { display: flex; flex-wrap: wrap; gap: 5px; }
+.pcard .stack span { font-family: var(--f-mono); font-size: 0.68rem; padding: 2px 7px; border-radius: 4px; border: 1px solid var(--line); color: var(--fg); }
+.plinks { display: flex; flex-wrap: wrap; gap: 8px; }
+.plinks a { font-family: var(--f-mono); font-size: 0.76rem; text-decoration: none; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--line); color: var(--fg); background: var(--panel-2); }
+.plinks a.live { background: var(--lane); color: var(--ink); border-color: var(--lane); font-weight: 500; }
+.plinks a:hover { border-color: var(--fg); }
+
 footer { display: flex; flex-wrap: wrap; gap: 8px 22px; font-family: var(--f-mono); font-size: 0.76rem; color: var(--muted); padding-top: 6px; border-top: 1px solid var(--line); }
 footer a { color: var(--fg); text-decoration: none; border-bottom: 1px solid var(--line); }
 footer a:hover { border-color: var(--fg); }
@@ -253,6 +270,12 @@ footer a:hover { border-color: var(--fg); }
       <div class="eg"><span style="--lane:var(--c-live)" data-i18n="s3a">Festival changeovers</span><span style="--lane:var(--c-code)" data-i18n="s3b">TDD with Jest and RSpec</span></div></div>
     <div class="step"><span class="n"><b data-i18n="step" style="font-weight:400">STEP</b> 4</span><h4 data-i18n="s4h">Ship for a live audience</h4><p data-i18n="s4p">There is no second take. Build for reliability and keep it running after opening night.</p>
       <div class="eg"><span style="--lane:var(--c-hw)" data-i18n="s4a">24-month maintenance plan</span><span style="--lane:var(--c-civic)" data-i18n="s4b">Policy campaign for the scene</span></div></div>
+  </section>
+
+  <section class="projects" aria-label="Projects">
+    <h3 data-i18n="pH">Selected projects</h3>
+    <p data-i18n="pP">Live demo opens the running app. Code opens the public repository on GitHub.</p>
+    <div class="pgrid" id="pgrid"></div>
   </section>
 
   <footer>
@@ -509,7 +532,7 @@ footer a:hover { border-color: var(--fg); }
       s2h: 'Map the signal flow', s2p: 'Source, routing, output. Microphones and cues, or sensors, firmware and APIs.', s2a: 'Boom to final mix', s2b: 'Claude to MIDI/USB to MPC',
       s3h: 'Prototype against the clock', s3p: 'Rehearsals, changeovers and six-week sprints all reward fast, tested iterations.', s3a: 'Festival changeovers', s3b: 'TDD with Jest and RSpec',
       s4h: 'Ship for a live audience', s4p: 'There is no second take. Build for reliability and keep it running after opening night.', s4a: '24-month maintenance plan', s4b: 'Policy campaign for the scene',
-      keys: 'Space: play/pause · ← →: chapters', trk: 'TRACK',
+      keys: 'Space: play/pause · ← →: chapters', trk: 'TRACK', pH: 'Selected projects', pP: 'Live demo opens the running app. Code opens the public repository on GitHub.',
       ctx: 'Context', prob: 'Problem', sol: 'Solved by', carry: 'Carries forward:', ch: 'CH', soundOn: 'SOUND ON', soundOff: 'SOUND OFF', grant: 'Grant', solo: 'Solo',
     },
     es: {
@@ -523,7 +546,7 @@ footer a:hover { border-color: var(--fg); }
       s2h: 'Mapear el flujo de señal', s2p: 'Fuente, ruteo, salida. Micrófonos y cues, o sensores, firmware y APIs.', s2a: 'Del boom a la mezcla final', s2b: 'De Claude a MIDI/USB a la MPC',
       s3h: 'Prototipar contra reloj', s3p: 'Ensayos, cambios de escenario y sprints de seis semanas premian iteraciones rápidas y probadas.', s3a: 'Cambios de escenario en festivales', s3b: 'TDD con Jest y RSpec',
       s4h: 'Estrenar ante público en vivo', s4p: 'No hay segunda toma. Construir para que sea confiable y siga funcionando después del estreno.', s4a: 'Plan de mantenimiento de 24 meses', s4b: 'Campaña de política pública para la escena',
-      keys: 'Espacio: play/pausa · ← →: capítulos', trk: 'PISTA',
+      keys: 'Espacio: play/pausa · ← →: capítulos', trk: 'PISTA', pH: 'Proyectos seleccionados', pP: 'Ver demo abre la app funcionando. Código abre el repositorio público en GitHub.',
       ctx: 'Contexto', prob: 'Problema', sol: 'Cómo lo resolví', carry: 'Lo que se lleva:', ch: 'CAP', soundOn: 'SONIDO ON', soundOff: 'SONIDO OFF', grant: 'Beca', solo: 'Solo',
     },
   };
@@ -582,6 +605,59 @@ footer a:hover { border-color: var(--fg); }
     clipEls.push({ el, ch, a: y, year: y });
   });
 
+  // ---------- projects ----------
+  const GH = 'https://github.com/andym80/';
+  const PROJECTS = [
+    { lane: 'civic', title: 'MUX Firmas',
+      en: 'Signature site for the MUX campaign against the cut in scenic-music royalties: the position paper, a signing form and the live list of signers.',
+      es: 'Sitio de firmas para la campaña de MUX contra la baja del arancel de música escénica: el documento, el formulario para firmar y la lista de firmantes en vivo.',
+      stack: ['Next.js', 'v0'], links: [['live', 'https://v0-muxfirmas.vercel.app']] },
+    { lane: 'ai', title: 'AgentMe',
+      en: 'Brand agent that reads news and social media inputs with an LLM and proposes communication responses.',
+      es: 'Agente de marca que analiza noticias y redes sociales con un LLM y propone respuestas de comunicación.',
+      stack: ['Next.js 15', 'Vercel AI SDK', 'Anthropic', 'OpenAI', 'Supabase'], links: [['code', GH + 'AgentMe']] },
+    { lane: 'code', title: 'Task Manager',
+      en: 'Projects and tasks with status, priority, filters and an agenda grouped by due date. Rails 8 REST API with a Next.js 16 front end, all in Docker.',
+      es: 'Proyectos y tareas con estado, prioridad, filtros y una agenda agrupada por vencimiento. API REST en Rails 8 con front en Next.js 16, todo en Docker.',
+      stack: ['Rails 8', 'Next.js 16', 'PostgreSQL', 'MUI', 'Docker'], links: [['code', GH + 'TasksRailsApi']] },
+    { lane: 'hw', title: 'QR Art Scanner',
+      en: 'Scan a QR code with the phone camera to launch an augmented-reality art piece in the browser.',
+      es: 'Escaneás un código QR con la cámara del celular y se abre una obra de arte en realidad aumentada en el navegador.',
+      stack: ['Next.js', 'WebAR', 'v0'], links: [['live', 'https://v0-qr-scanner-with-8thwall.vercel.app']] },
+    { lane: 'live', title: 'Decadance @ Uniclub',
+      en: 'Landing page for an electronic music night in Buenos Aires: animated canvas background, line-up and ticket link.',
+      es: 'Landing para una noche de música electrónica en Buenos Aires: fondo animado en canvas, line-up y link a entradas.',
+      stack: ['Next.js', 'Canvas', 'v0'], links: [['live', 'https://cadance.vercel.app']] },
+    { lane: 'code', title: 'Blue Dreams',
+      en: 'Yacht booking app built by a remote team of five: sign up, log in and reserve yachts. React/Redux front end with a Rails API.',
+      es: 'App de reserva de yates hecha por un equipo remoto de cinco personas: registro, login y reservas. Front en React/Redux con API en Rails.',
+      stack: ['React', 'Redux', 'Rails', 'PostgreSQL'], links: [['front', GH + 'blue-dreams-front-end'], ['back', GH + 'blue-dreams-back-end']] },
+    { lane: 'live', title: 'OID Sample Pack',
+      en: 'Storefront for curated dance-music sample packs made with music producers.',
+      es: 'Tienda de sample packs de música dance curados junto a productores.',
+      stack: ['React', 'JavaScript'], links: [['code', GH + 'oid-sample-pack']] },
+    { lane: 'code', title: 'Weather App',
+      en: 'Search any city and get current temperature, humidity, wind and pressure from a weather API. Tested with Jest.',
+      es: 'Buscás una ciudad y ves temperatura, humedad, viento y presión desde una API del clima. Con tests en Jest.',
+      stack: ['React', 'Redux', 'Jest'], links: [['code', GH + 'react-capstone']] },
+  ];
+  const LINK_LABEL = {
+    en: { live: 'Live demo ↗', code: 'Code ↗', front: 'Front-end code ↗', back: 'Back-end code ↗' },
+    es: { live: 'Ver demo ↗', code: 'Código ↗', front: 'Código front-end ↗', back: 'Código back-end ↗' },
+  };
+  function renderProjects() {
+    const grid = document.getElementById('pgrid');
+    if (!grid) return;
+    grid.innerHTML = PROJECTS.map(pr => `
+      <article class="pcard" style="--lane:var(--c-${pr.lane})">
+        <span class="chip">${laneName(laneById[pr.lane])}</span>
+        <h4>${pr.title}</h4>
+        <p>${lang === 'es' ? pr.es : pr.en}</p>
+        <div class="stack">${pr.stack.map(x => `<span>${x}</span>`).join('')}</div>
+        <div class="plinks">${pr.links.map(([k, href]) => `<a class="${k === 'live' ? 'live' : ''}" href="${href}" target="_blank" rel="noopener">${LINK_LABEL[lang][k]}</a>`).join('')}</div>
+      </article>`).join('');
+  }
+
   function applyLang(next) {
     lang = next === 'es' ? 'es' : 'en';
     document.documentElement.lang = lang;
@@ -598,6 +674,7 @@ footer a:hover { border-color: var(--fg); }
       else { const s = lang === 'es' ? (CLIP_ES[o.label] || o.label) : o.label; o.el.textContent = s; o.el.title = s; }
     });
     if (typeof renderSound === 'function') renderSound();
+    renderProjects();
   }
 
   // ---------- state ----------
