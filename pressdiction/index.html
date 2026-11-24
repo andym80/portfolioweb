@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pressdiction Tour</title>
+<meta name="description" content="Recorrido visual por Pressdiction, un gestor de prensa con análisis de tono de la cobertura. Capturas reales de la app con datos ficticios.">
+<meta name="theme-color" content="#0c111d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Same visual system as the multitrack CV: dark desk, AI & protocols lane color as accent. */
+:root {
+  color-scheme: dark;
+  --ink: #0c111d; --panel: #131a2b; --panel-2: #182136; --line: #253050;
+  --fg: #e9edf6; --muted: #93a0bd; --lane: #ad91ff;
+  --f-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--ink); color: var(--fg); font: 15px/1.6 var(--f-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 48px; }
+.wrap { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; }
+a { color: var(--fg); }
+:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; font-family: var(--f-mono); font-size: 0.8rem; }
+.top a { text-decoration: none; border-bottom: 1px solid var(--line); }
+.lang { display: inline-flex; border: 1px solid var(--line); border-radius: 7px; overflow: hidden; }
+.lang button { background: var(--panel-2); color: var(--muted); border: 0; padding: 6px 11px; font: inherit; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--fg); color: var(--ink); }
+.eyebrow { font-family: var(--f-mono); font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lane); display: flex; align-items: center; gap: 8px; }
+.eyebrow::before { content: ""; width: 9px; height: 9px; border-radius: 2px; background: var(--lane); }
+h1 { font-family: var(--f-display); font-weight: 800; font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.02; margin: 6px 0 0; letter-spacing: -0.015em; text-wrap: balance; }
+.lead { color: var(--muted); max-width: 68ch; margin: 0; font-size: 1.02rem; }
+.facts { display: flex; flex-wrap: wrap; gap: 6px; }
+.facts span { font-family: var(--f-mono); font-size: 0.72rem; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--line); }
+.notice { border-left: 3px solid var(--lane); padding: 8px 14px; color: var(--muted); font-size: 0.88rem; margin: 0; max-width: 80ch; }
+.step { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; padding-top: 18px; border-top: 1px solid var(--line); }
+.step header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+.step .n { font-family: var(--f-mono); font-size: 0.74rem; color: var(--muted); letter-spacing: 0.08em; }
+.step h2 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: 1.35rem; }
+.step p { margin: 0; color: var(--muted); max-width: 75ch; }
+.step img { width: 100%; height: auto; max-width: 100%; display: block; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); }
+footer { border-top: 1px solid var(--line); padding-top: 14px; font-family: var(--f-mono); font-size: 0.78rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 8px 22px; }
+[data-en] { display: none; }
+html[lang="en"] [data-es] { display: none; }
+html[lang="en"] [data-en] { display: revert; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a href="/"><span data-es>← Volver al portfolio</span><span data-en>← Back to portfolio</span></a>
+    <div class="lang" role="group" aria-label="Idioma / Language"><button type="button" data-lang="es" aria-pressed="true">ES</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+  </div>
+
+  <header>
+    <span class="eyebrow"><span data-es>IA y protocolos · Tour visual</span><span data-en>AI & protocols · Visual tour</span></span>
+    <h1>Pressdiction</h1>
+  </header>
+  <p class="lead">
+    <span data-es>Un gestor de prensa para campañas: base de periodistas y medios, campañas con seguimiento de cada envío, lectura automática de medios por RSS y análisis del tono de la cobertura, con las palabras que explican cada resultado.</span>
+    <span data-en>A press manager for campaigns: a database of journalists and outlets, campaigns that track every pitch, automatic RSS reading of the media, and tone analysis of the coverage that shows the words behind each result.</span>
+  </p>
+  <div class="facts"><span>Next.js 15</span><span>React 19</span><span>TypeScript</span><span>PostgreSQL</span><span>Supabase Auth</span><span>Meta Graph API</span><span>Vercel Cron</span><span>node:test · 76 tests</span></div>
+  <p class="notice">
+    <span data-es>La app real es privada (requiere login) porque guarda contactos reales. Estas son capturas de la misma app corriendo en modo demo, con datos ficticios.</span>
+    <span data-en>The real app is private (login required) because it stores real contacts. These are screenshots of the same app running in demo mode with fictitious data.</span>
+  </p>
+
+  <section class="step">
+    <header><span class="n">01</span><h2><span data-es>Análisis de tono</span><span data-en>Tone analysis</span></h2></header>
+    <p><span data-es>La pantalla de inicio: cómo titulan los medios un tema, por medio, país o temática. Con menos de 5 notas no saca conclusión.</span><span data-en>The home screen: how outlets headline a topic, by outlet, country or subject. With fewer than 5 articles it draws no conclusion.</span></p>
+    <img src="img/analisis.jpg" width="2560" height="1720" loading="lazy" alt="Tabla de análisis de tono por medio, con barras de favorable, neutral y crítico y el balance de cada medio">
+  </section>
+  <section class="step">
+    <header><span class="n">02</span><h2><span data-es>Notas</span><span data-en>Articles</span></h2></header>
+    <p><span data-es>Lo que publicaron las fuentes: título, firma, fecha, resumen breve y las palabras que definieron el tono. Solo metadatos, nunca el texto completo.</span><span data-en>What the sources published: headline, byline, date, a short summary and the words that set the tone. Metadata only, never the full text.</span></p>
+    <img src="img/notas.jpg" width="2560" height="1720" loading="lazy" alt="Lista de notas con medio, firma, fecha y etiqueta de tono">
+  </section>
+  <section class="step">
+    <header><span class="n">03</span><h2><span data-es>Campañas</span><span data-en>Campaigns</span></h2></header>
+    <p><span data-es>Cada campaña con su asunto y una barra de avance por estado: pendiente, mandado, respondió, publicado o descartado.</span><span data-en>Each campaign with its subject line and a progress bar by status: pending, sent, replied, published or dropped.</span></p>
+    <img src="img/campanas.jpg" width="2560" height="1720" loading="lazy" alt="Lista de campañas con barras de avance por estado">
+  </section>
+  <section class="step">
+    <header><span class="n">04</span><h2><span data-es>Seguimiento de una campaña</span><span data-en>Campaign follow-up</span></h2></header>
+    <p><span data-es>Por cada periodista: estado, fecha de envío, respuesta y una nota. La app no manda mails: dice "mandado", no "entregado".</span><span data-en>For each journalist: status, send date, reply and a note. The app does not send email, so it says "sent", not "delivered".</span></p>
+    <img src="img/campana.jpg" width="2560" height="1720" loading="lazy" alt="Detalle de la campaña Plan de transporte con el estado de cada periodista">
+  </section>
+  <section class="step">
+    <header><span class="n">05</span><h2><span data-es>Contactos</span><span data-en>Contacts</span></h2></header>
+    <p><span data-es>Periodistas con medio, tema que cubren y mail, con búsqueda y sin mails duplicados.</span><span data-en>Journalists with outlet, beat and email, searchable and with no duplicate emails.</span></p>
+    <img src="img/contactos.jpg" width="2560" height="1720" loading="lazy" alt="Tabla de contactos con nombre, medio, tema y mail">
+  </section>
+  <section class="step">
+    <header><span class="n">06</span><h2><span data-es>Fuentes</span><span data-en>Sources</span></h2></header>
+    <p><span data-es>Feeds RSS por país y temática, con el estado de la última lectura. Respeta robots.txt, no entra a paywalls y limita cada descarga.</span><span data-en>RSS feeds by country and subject, with the status of the last read. It respects robots.txt, never enters paywalls and caps every download.</span></p>
+    <img src="img/fuentes.jpg" width="2560" height="1720" loading="lazy" alt="Lista de fuentes RSS con país, temática y estado de lectura">
+  </section>
+  <section class="step">
+    <header><span class="n">07</span><h2><span data-es>Audiencia</span><span data-en>Audience</span></h2></header>
+    <p><span data-es>Sentimiento de los comentarios en páginas de Facebook e Instagram conectadas por OAuth. Solo guarda conteos diarios, nunca textos ni nombres.</span><span data-en>Comment sentiment on Facebook and Instagram pages connected through OAuth. It stores daily counts only, never text or names.</span></p>
+    <img src="img/audiencia.jpg" width="2560" height="1720" loading="lazy" alt="Página conectada con comentarios positivos, negativos y mixtos de los últimos 30 días">
+  </section>
+
+  <footer>
+    <span>Andy Menutti</span>
+    <a href="/">andresmenutti.vercel.app</a>
+    <span>WhatsApp +54 11 3455 0050</span>
+    <span>menuttiandres@gmail.com</span>
+  </footer>
+</div>
+<script>
+(() => {
+  const set = (l) => {
+    document.documentElement.lang = l;
+    document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === l)));
+  };
+  document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => {
+    set(b.dataset.lang);
+    try { history.replaceState(null, '', '#' + b.dataset.lang); } catch (e) {}
+  }));
+  set(location.hash === '#en' ? 'en' : 'es');
+})();
+</script>
+</body>
+</html>
