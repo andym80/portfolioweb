@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Task Manager Tour</title>
+<meta name="description" content="Recorrido visual por Task Manager: API REST en Ruby on Rails 8 y front en Next.js 16, con PostgreSQL y Docker. Capturas reales de la app.">
+<meta name="theme-color" content="#0c111d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Same visual system as the multitrack CV: dark desk, AI & protocols lane color as accent. */
+:root {
+  color-scheme: dark;
+  --ink: #0c111d; --panel: #131a2b; --panel-2: #182136; --line: #253050;
+  --fg: #e9edf6; --muted: #93a0bd; --lane: #63a4ff;
+  --f-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--ink); color: var(--fg); font: 15px/1.6 var(--f-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 48px; }
+.wrap { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; }
+a { color: var(--fg); }
+:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; font-family: var(--f-mono); font-size: 0.8rem; }
+.top a { text-decoration: none; border-bottom: 1px solid var(--line); }
+.lang { display: inline-flex; border: 1px solid var(--line); border-radius: 7px; overflow: hidden; }
+.lang button { background: var(--panel-2); color: var(--muted); border: 0; padding: 6px 11px; font: inherit; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--fg); color: var(--ink); }
+.eyebrow { font-family: var(--f-mono); font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lane); display: flex; align-items: center; gap: 8px; }
+.eyebrow::before { content: ""; width: 9px; height: 9px; border-radius: 2px; background: var(--lane); }
+h1 { font-family: var(--f-display); font-weight: 800; font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.02; margin: 6px 0 0; letter-spacing: -0.015em; text-wrap: balance; }
+.lead { color: var(--muted); max-width: 68ch; margin: 0; font-size: 1.02rem; }
+.facts { display: flex; flex-wrap: wrap; gap: 6px; }
+.facts span { font-family: var(--f-mono); font-size: 0.72rem; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--line); }
+.notice { border-left: 3px solid var(--lane); padding: 8px 14px; color: var(--muted); font-size: 0.88rem; margin: 0; max-width: 80ch; }
+.step { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; padding-top: 18px; border-top: 1px solid var(--line); }
+.step header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+.step .n { font-family: var(--f-mono); font-size: 0.74rem; color: var(--muted); letter-spacing: 0.08em; }
+.step h2 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: 1.35rem; }
+.step p { margin: 0; color: var(--muted); max-width: 75ch; }
+.step img { width: 100%; height: auto; max-width: 100%; display: block; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); }
+footer { border-top: 1px solid var(--line); padding-top: 14px; font-family: var(--f-mono); font-size: 0.78rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 8px 22px; }
+[data-en] { display: none; }
+html[lang="en"] [data-es] { display: none; }
+html[lang="en"] [data-en] { display: revert; }
+.links { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { font-family: var(--f-mono); font-size: 0.82rem; text-decoration: none; padding: 8px 14px; border-radius: 7px; border: 1px solid var(--line); background: var(--panel-2); color: var(--fg); }
+.btn.live { background: var(--lane); border-color: var(--lane); color: var(--ink); font-weight: 500; }
+.btn:hover { border-color: var(--fg); }
+.api { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; }
+.api table { border-collapse: collapse; width: 100%; font-family: var(--f-mono); font-size: 0.82rem; }
+.api td { padding: 7px 14px; border-top: 1px solid var(--line); white-space: nowrap; }
+.api tr:first-child td { border-top: 0; }
+.api td.m { color: var(--lane); width: 1%; }
+.api td.d { color: var(--muted); font-family: var(--f-body); white-space: normal; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a href="/"><span data-es>← Volver al portfolio</span><span data-en>← Back to portfolio</span></a>
+    <div class="lang" role="group" aria-label="Idioma / Language"><button type="button" data-lang="es" aria-pressed="true">ES</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+  </div>
+
+  <header>
+    <span class="eyebrow"><span data-es>Desarrollo full-stack · Tour visual</span><span data-en>Full-stack web · Visual tour</span></span>
+    <h1>Task Manager</h1>
+  </header>
+  <p class="lead">
+    <span data-es>Gestión de proyectos y tareas con estado, prioridad, responsables y una agenda por vencimiento. Backend en Ruby on Rails 8 en modo API y frontend en Next.js 16, con PostgreSQL y todo levantado con Docker Compose.</span>
+    <span data-en>Project and task management with status, priority, assignees and a due-date agenda. A Ruby on Rails 8 API-only back end and a Next.js 16 front end, with PostgreSQL, all running under Docker Compose.</span>
+  </p>
+  <div class="facts"><span>Ruby on Rails 8</span><span>Next.js 16</span><span>TypeScript</span><span>PostgreSQL</span><span>MUI v7</span><span>React Hook Form</span><span>Docker Compose</span><span>Minitest · 23 tests</span></div>
+  <div class="links">
+    <a class="btn live" href="https://github.com/andym80/TasksRailsApi" target="_blank" rel="noopener"><span data-es>Ver el código en GitHub ↗</span><span data-en>View the code on GitHub ↗</span></a>
+  </div>
+  <p class="notice">
+    <span data-es>Capturas de la app corriendo con los datos de ejemplo del propio repositorio (db/seeds.rb).</span>
+    <span data-en>Screenshots of the app running with the repository’s own sample data (db/seeds.rb).</span>
+  </p>
+
+  <section class="step">
+    <header><span class="n">01</span><h2><span data-es>Agenda</span><span data-en>Agenda</span></h2></header>
+    <p><span data-es>Todas las tareas abiertas agrupadas por vencimiento: vencidas, hoy, próximos 7 días y más adelante. Filtros por estado y prioridad, y el estado se cambia con un clic.</span><span data-en>Every open task grouped by due date: overdue, today, next 7 days and later. Filters by status and priority, and status changes with one click.</span></p>
+    <img src="img/agenda.jpg" width="2560" height="1800" loading="lazy" alt="Agenda con tareas agrupadas en vencidas, hoy, próximos 7 días y más adelante">
+  </section>
+  <section class="step">
+    <header><span class="n">02</span><h2><span data-es>Proyectos</span><span data-en>Projects</span></h2></header>
+    <p><span data-es>Cada proyecto con su responsable y una barra de avance de tareas completadas.</span><span data-en>Each project with its owner and a progress bar of completed tasks.</span></p>
+    <img src="img/proyectos.jpg" width="2560" height="1800" loading="lazy" alt="Lista de proyectos con responsable y avance">
+  </section>
+  <section class="step">
+    <header><span class="n">03</span><h2><span data-es>Detalle de un proyecto</span><span data-en>Project detail</span></h2></header>
+    <p><span data-es>Las tareas del proyecto con prioridad, responsable y fecha, y acciones para editar o eliminar el proyecto.</span><span data-en>The project’s tasks with priority, assignee and date, plus actions to edit or delete the project.</span></p>
+    <img src="img/proyecto.jpg" width="2560" height="1800" loading="lazy" alt="Detalle del proyecto OMNI Platform con sus tareas">
+  </section>
+  <section class="step">
+    <header><span class="n">04</span><h2><span data-es>Crear una tarea</span><span data-en>Creating a task</span></h2></header>
+    <p><span data-es>Formulario con validación (React Hook Form): título, descripción, vencimiento, responsable y prioridad.</span><span data-en>A validated form (React Hook Form): title, description, due date, assignee and priority.</span></p>
+    <img src="img/nueva-tarea.jpg" width="2560" height="1800" loading="lazy" alt="Diálogo para crear una tarea nueva">
+  </section>
+  <section class="step">
+    <header><span class="n">05</span><h2><span data-es>La API REST en Rails</span><span data-en>The Rails REST API</span></h2></header>
+    <p><span data-es>El front habla con una API JSON versionada. Tiene 23 tests (modelos y controladores) que pasan.</span><span data-en>The front end talks to a versioned JSON API, covered by 23 passing tests (models and controllers).</span></p>
+    <div class="api"><table>
+        <tr><td class="m">GET</td><td>/api/v1/projects</td><td class="d"><span data-es>Lista de proyectos con sus tareas</span><span data-en>Projects with their tasks</span></td></tr>
+        <tr><td class="m">POST</td><td>/api/v1/projects</td><td class="d"><span data-es>Crear un proyecto</span><span data-en>Create a project</span></td></tr>
+        <tr><td class="m">GET · PATCH · DELETE</td><td>/api/v1/projects/:id</td><td class="d"><span data-es>Ver, editar o borrar un proyecto</span><span data-en>Show, update or delete a project</span></td></tr>
+        <tr><td class="m">POST</td><td>/api/v1/projects/:project_id/tasks</td><td class="d"><span data-es>Crear una tarea en un proyecto</span><span data-en>Create a task in a project</span></td></tr>
+        <tr><td class="m">GET</td><td>/api/v1/tasks</td><td class="d"><span data-es>Tareas, filtrables por estado y prioridad</span><span data-en>Tasks, filterable by status and priority</span></td></tr>
+        <tr><td class="m">GET · PATCH · DELETE</td><td>/api/v1/tasks/:id</td><td class="d"><span data-es>Ver, editar o borrar una tarea</span><span data-en>Show, update or delete a task</span></td></tr>
+        <tr><td class="m">PATCH</td><td>/api/v1/tasks/:id/status</td><td class="d"><span data-es>Cambiar solo el estado</span><span data-en>Change only the status</span></td></tr>
+        <tr><td class="m">GET</td><td>/api/v1/users</td><td class="d"><span data-es>Usuarios para asignar tareas</span><span data-en>Users to assign tasks to</span></td></tr>
+    </table></div>
+  </section>
+
+  <footer>
+    <span>Andy Menutti</span>
+    <a href="/">andresmenutti.vercel.app</a>
+    <span>WhatsApp +54 11 3455 0050</span>
+    <span>menuttiandres@gmail.com</span>
+  </footer>
+</div>
+<script>
+(() => {
+  const set = (l) => {
+    document.documentElement.lang = l;
+    document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === l)));
+  };
+  document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => {
+    set(b.dataset.lang);
+    try { history.replaceState(null, '', '#' + b.dataset.lang); } catch (e) {}
+  }));
+  set(location.hash === '#en' ? 'en' : 'es');
+})();
+</script>
+</body>
+</html>
