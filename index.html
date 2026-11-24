@@ -1,0 +1,795 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Andy Menutti: 25 years of sound design and audio engineering, now full-stack and AI development. An interactive multitrack timeline of contexts and problems solved.">
+<meta property="og:title" content="Andy Menutti Multitrack">
+<meta property="og:description" content="Sound designer, audio engineer, full-stack and AI builder. Seven career branches, fourteen chapters, one way of solving problems.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0c111d">
+<style>
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+</style>
+<title>Andy Menutti Multitrack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a DAW session. Transport bar on top, the current "region" explained in a big card over a live waveform,
+   then the multitrack timeline (one lane per career branch) with a moving playhead. Deliberately single dark look, like a mixing desk. */
+:root {
+  color-scheme: dark;
+  --ink: #0c111d;
+  --panel: #131a2b;
+  --panel-2: #182136;
+  --line: #253050;
+  --fg: #e9edf6;
+  --muted: #93a0bd;
+  --c-film: #e9b44c;
+  --c-stage: #f07592;
+  --c-live: #ff8d52;
+  --c-civic: #c8d46e;
+  --c-hw: #3fcbb6;
+  --c-code: #63a4ff;
+  --c-ai: #ad91ff;
+  --f-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --lw: 172px;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--ink);
+  color: var(--fg);
+  font-family: var(--f-body);
+  font-size: 15px;
+  line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 40px;
+}
+.wrap { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+
+/* ---------- transport ---------- */
+.top {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px;
+  padding: 14px 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+}
+.id h1 { font-family: var(--f-display); font-weight: 800; font-size: 1.7rem; line-height: 1.05; margin: 0; letter-spacing: -0.01em; }
+.id p { margin: 4px 0 0; color: var(--muted); font-size: 0.86rem; }
+.transport { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.tbtn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  height: 38px; min-width: 38px; padding: 0 12px; border-radius: 7px;
+  background: var(--panel-2); border: 1px solid var(--line); cursor: pointer;
+  font-family: var(--f-mono); font-size: 0.78rem; letter-spacing: 0.04em;
+}
+.tbtn:hover { border-color: var(--muted); }
+.tbtn svg { width: 16px; height: 16px; fill: currentColor; }
+.tbtn.play { background: var(--fg); color: var(--ink); border-color: var(--fg); min-width: 46px; }
+.tbtn[aria-pressed="true"] { border-color: var(--c-hw); color: var(--c-hw); }
+.contact { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-top: 10px; font-family: var(--f-mono); font-size: 0.78rem; }
+.contact a.wa { display: inline-flex; align-items: center; gap: 6px; color: var(--ink); background: var(--c-hw); text-decoration: none; padding: 5px 10px; border-radius: 6px; font-weight: 500; }
+.contact a.wa:hover { filter: brightness(1.1); }
+.contact a.wa svg { width: 14px; height: 14px; fill: currentColor; }
+.mail { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 6px; padding: 2px 3px 2px 10px; }
+.mail span { user-select: all; overflow-wrap: anywhere; }
+.copy { font-family: var(--f-mono); font-size: 0.7rem; background: var(--panel-2); border: 1px solid var(--line); border-radius: 4px; padding: 3px 8px; cursor: pointer; }
+.copy:hover { border-color: var(--muted); }
+.lang { display: inline-flex; border: 1px solid var(--line); border-radius: 7px; overflow: hidden; height: 38px; }
+.lang button { background: var(--panel-2); border: 0; padding: 0 11px; font-family: var(--f-mono); font-size: 0.78rem; cursor: pointer; color: var(--muted); }
+.lang button[aria-pressed="true"] { background: var(--fg); color: var(--ink); }
+.tc {
+  font-family: var(--f-mono); font-variant-numeric: tabular-nums; font-size: 0.8rem;
+  background: #070a12; border: 1px solid var(--line); border-radius: 7px; padding: 6px 10px; line-height: 1.3;
+  color: var(--c-hw); min-width: 132px;
+}
+.tc small { display: block; color: var(--muted); font-size: 0.66rem; letter-spacing: 0.08em; }
+
+/* ---------- stage ---------- */
+.stage {
+  position: relative; overflow: hidden; border-radius: 12px; border: 1px solid var(--line);
+  background: radial-gradient(120% 140% at 100% 0%, var(--panel-2) 0%, var(--ink) 60%);
+  min-height: 380px;
+}
+#wave { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.card {
+  position: relative; z-index: 1; max-width: 660px; padding: 24px 24px 22px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.card.swap { animation: swap 520ms cubic-bezier(.2,.7,.2,1); }
+@keyframes swap { from { opacity: 0.15; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; font-family: var(--f-mono); font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.chip { display: inline-flex; align-items: center; gap: 7px; color: var(--lane); }
+.chip::before { content: ""; width: 9px; height: 9px; border-radius: 2px; background: var(--lane); }
+.card h2 { font-family: var(--f-display); font-weight: 800; font-size: clamp(1.6rem, 3.6vw, 2.5rem); line-height: 1.04; margin: 0; letter-spacing: -0.015em; text-wrap: balance; }
+.rows { display: grid; grid-template-columns: 96px 1fr; gap: 10px 16px; margin: 0; max-width: 62ch; }
+.rows dt { font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+.rows dd { margin: 0; min-width: 0; }
+.rows dt.prob { color: var(--lane); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tags span { font-family: var(--f-mono); font-size: 0.72rem; padding: 3px 8px; border-radius: 4px; background: color-mix(in srgb, var(--lane) 16%, transparent); color: var(--fg); border: 1px solid color-mix(in srgb, var(--lane) 40%, transparent); }
+.carry { font-size: 0.86rem; color: var(--muted); }
+.carry b { color: var(--fg); font-weight: 600; }
+.prog { height: 3px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.prog i { display: block; height: 100%; width: 0; background: var(--lane); }
+
+/* ---------- session / lanes ---------- */
+.session { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.shead { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+.shead h3 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: 1.05rem; }
+.shead p { margin: 0; font-size: 0.8rem; color: var(--muted); }
+.lanes { position: relative; --p: 0; }
+.row { display: grid; grid-template-columns: var(--lw) minmax(0, 1fr); }
+.ruler .track { height: 26px; position: relative; overflow: hidden; }
+.ruler .lab { font-family: var(--f-mono); font-size: 0.66rem; color: var(--muted); letter-spacing: 0.1em; padding: 6px 12px; }
+.tick { position: absolute; top: 0; bottom: 0; border-left: 1px solid var(--line); font-family: var(--f-mono); font-size: 0.66rem; color: var(--muted); padding: 5px 0 0 4px; font-variant-numeric: tabular-nums; }
+.lane { border-top: 1px solid var(--line); transition: opacity 250ms; }
+.lane .track { position: relative; height: 54px; background-image: linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: calc(100% / 27 * 5) 100%; background-position: calc(100% / 27 * 0) 0; }
+.lname {
+  display: flex; align-items: center; gap: 8px; text-align: left; background: var(--panel-2); border: 0; border-right: 1px solid var(--line);
+  padding: 0 10px; cursor: pointer; min-width: 0;
+}
+.lname .sw { width: 10px; height: 26px; border-radius: 2px; background: var(--lane); flex: none; }
+.lname .nm { font-size: 0.8rem; font-weight: 500; line-height: 1.2; min-width: 0; }
+.lname .nm .s { display: none; }
+.lname .solo { margin-left: auto; font-family: var(--f-mono); font-size: 0.64rem; width: 20px; height: 20px; display: grid; place-items: center; border-radius: 3px; border: 1px solid var(--line); color: var(--muted); flex: none; }
+.lname[aria-pressed="true"] .solo { background: var(--c-film); color: var(--ink); border-color: var(--c-film); }
+.lanes.soloing .lane:not(.soloed) { opacity: 0.28; }
+.clip {
+  position: absolute; height: 20px; border-radius: 4px; border: 1px solid var(--lane);
+  background: color-mix(in srgb, var(--lane) 22%, var(--panel)); padding: 0 6px; cursor: pointer;
+  font-size: 0.7rem; line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left;
+  min-width: 8px; opacity: 0.55; transition: opacity 300ms, background 300ms, box-shadow 300ms;
+}
+.clip.approx { border-style: dashed; }
+.clip.past { opacity: 0.85; }
+.clip.on { opacity: 1; background: var(--lane); color: var(--ink); font-weight: 600; box-shadow: 0 0 0 3px color-mix(in srgb, var(--lane) 30%, transparent); }
+.mark { position: absolute; width: 12px; height: 12px; transform: translateX(-6px) rotate(45deg); background: var(--panel); border: 1.5px solid var(--lane); cursor: pointer; padding: 0; opacity: 0.6; transition: opacity 300ms, background 300ms; }
+.mark.past { opacity: 0.9; }
+.mark.on { background: var(--lane); opacity: 1; }
+.playhead { position: absolute; top: 0; bottom: 0; left: calc(var(--lw) + (100% - var(--lw)) * var(--p)); width: 2px; margin-left: -1px; background: var(--fg); pointer-events: none; z-index: 2; box-shadow: 0 0 10px rgba(233,237,246,.5); }
+.playhead::before { content: ""; position: absolute; top: 0; left: -5px; border: 6px solid transparent; border-top: 8px solid var(--fg); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 10px 16px; border-top: 1px solid var(--line); font-size: 0.76rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.lg-solid, .lg-dash { width: 18px; height: 10px; border-radius: 2px; border: 1px solid var(--muted); }
+.lg-dash { border-style: dashed; }
+.lg-mark { width: 9px; height: 9px; transform: rotate(45deg); border: 1.5px solid var(--muted); }
+
+/* ---------- method ---------- */
+.method { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.method h3 { grid-column: 1 / -1; margin: 6px 0 0; font-family: var(--f-display); font-weight: 800; font-size: 1.45rem; letter-spacing: -0.01em; text-wrap: balance; }
+.method h3 + p { grid-column: 1 / -1; margin: -6px 0 4px; color: var(--muted); max-width: 70ch; }
+.step { padding: 16px; border-top: 2px solid var(--line); display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.step .n { font-family: var(--f-mono); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; }
+.step h4 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: 1.1rem; }
+.step p { margin: 0; font-size: 0.86rem; color: var(--muted); }
+.step .eg { display: flex; flex-direction: column; gap: 3px; margin-top: 4px; font-size: 0.78rem; }
+.step .eg span { display: flex; align-items: baseline; gap: 7px; }
+.step .eg span::before { content: ""; width: 7px; height: 7px; border-radius: 2px; background: var(--lane); flex: none; transform: translateY(-1px); }
+
+footer { display: flex; flex-wrap: wrap; gap: 8px 22px; font-family: var(--f-mono); font-size: 0.76rem; color: var(--muted); padding-top: 6px; border-top: 1px solid var(--line); }
+footer a { color: var(--fg); text-decoration: none; border-bottom: 1px solid var(--line); }
+footer a:hover { border-color: var(--fg); }
+
+@media (max-width: 860px) {
+  .method { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  :root { --lw: 78px; }
+  .lname .nm .l { display: none; }
+  .lname .nm .s { display: inline; }
+  .lname .solo { display: none; }
+  .lname { padding: 0 6px; gap: 6px; }
+  .rows { grid-template-columns: 1fr; gap: 2px; }
+  .rows dd { margin-bottom: 8px; }
+  .card { padding: 18px 16px; }
+  .clip { font-size: 0; padding: 0; }
+  .method { grid-template-columns: minmax(0, 1fr); }
+  .stage { min-height: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card.swap { animation: none; }
+  .clip, .mark, .lane { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="id">
+      <h1>Andy Menutti</h1>
+      <p data-i18n="sub">Sound designer → audio engineer → full-stack &amp; AI builder · Buenos Aires</p>
+      <div class="contact">
+        <a class="wa" href="https://wa.me/5491134550050" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1a7 7 0 0 0-6 10.6L1 15l3.5-1A7 7 0 1 0 8 1zm3.6 9.6c-.2.5-.9.9-1.3.9-.4.1-.8.1-2.6-.6-2.2-.9-3.6-3.1-3.7-3.3-.1-.1-.9-1.2-.9-2.2s.6-1.6.8-1.8c.2-.2.4-.3.6-.3h.4c.1 0 .3 0 .5.4l.7 1.6c.1.1.1.3 0 .4l-.3.4-.3.3c-.1.1-.2.2-.1.4.1.2.6 1 1.3 1.6.9.8 1.6 1 1.8 1.1.2.1.4.1.5-.1l.6-.8c.2-.2.3-.2.5-.1l1.5.7c.2.1.4.2.4.3.1.1.1.6-.1 1.1z"/></svg>WhatsApp +54 11 3455 0050</a>
+        <span class="mail"><span id="mail">menuttiandres@gmail.com</span><button class="copy" id="copy" type="button" data-i18n="copy">Copy</button></span>
+      </div>
+    </div>
+    <div class="transport" role="group" aria-label="Playback">
+      <div class="lang" role="group" aria-label="Language"><button type="button" data-lang="en" aria-pressed="true">EN</button><button type="button" data-lang="es" aria-pressed="false">ES</button></div>
+      <button class="tbtn" id="prev" aria-label="Previous chapter"><svg viewBox="0 0 16 16"><path d="M3 2h2v12H3zM14 2v12L6 8z"/></svg></button>
+      <button class="tbtn play" id="play" aria-label="Pause"><svg viewBox="0 0 16 16" id="playIcon"><path d="M4 2h3v12H4zM9 2h3v12H9z"/></svg></button>
+      <button class="tbtn" id="next" aria-label="Next chapter"><svg viewBox="0 0 16 16"><path d="M11 2h2v12h-2zM2 2v12l8-6z"/></svg></button>
+      <button class="tbtn" id="sound" aria-pressed="false">SOUND OFF</button>
+      <div class="tc" aria-live="off"><small data-i18n="tcLab">YEAR · CHAPTER</small><span id="tc">2001.0 · 01/14</span></div>
+    </div>
+  </header>
+
+  <section class="stage" aria-label="Current chapter">
+    <canvas id="wave" aria-hidden="true"></canvas>
+    <article class="card" id="card" aria-live="polite"></article>
+  </section>
+
+  <section class="session" aria-label="Career timeline">
+    <div class="shead">
+      <h3 data-i18n="shH">Seven tracks, one career</h3>
+      <p data-i18n="shP">Click a region to jump there. Click a track name to solo that branch.</p>
+    </div>
+    <div class="lanes" id="lanes">
+      <div class="row ruler"><div class="lab" data-i18n="trk">TRACK</div><div class="track" id="ruler"></div></div>
+      <div class="playhead" aria-hidden="true"></div>
+    </div>
+    <div class="legend">
+      <span><i class="lg-solid"></i><b data-i18n="lg1" style="font-weight:400">Dates stated on the CV</b></span>
+      <span><i class="lg-dash"></i><b data-i18n="lg2" style="font-weight:400">Undated on the CV, placed approximately</b></span>
+      <span><i class="lg-mark"></i><b data-i18n="lg3" style="font-weight:400">Grant or distinction</b></span>
+    </div>
+  </section>
+
+  <section class="method" aria-label="Method">
+    <h3 data-i18n="mH">Different rooms, the same way of solving problems</h3>
+    <p data-i18n="mP">A film set, a festival stage, a ceramic speaker and an MCP server ask the same questions: what is the space, where does the signal go, and what happens when it fails in front of people?</p>
+    <div class="step"><span class="n"><b data-i18n="step" style="font-weight:400">STEP</b> 1</span><h4 data-i18n="s1h">Listen to the space</h4><p data-i18n="s1p">Read the room, the bodies, the users or the hardware before deciding anything.</p>
+      <div class="eg"><span style="--lane:var(--c-stage)" data-i18n="s1a">Choreographers and actors</span><span style="--lane:var(--c-hw)" data-i18n="s1b">Audience moving near ceramic discs</span></div></div>
+    <div class="step"><span class="n"><b data-i18n="step" style="font-weight:400">STEP</b> 2</span><h4 data-i18n="s2h">Map the signal flow</h4><p data-i18n="s2p">Source, routing, output. Microphones and cues, or sensors, firmware and APIs.</p>
+      <div class="eg"><span style="--lane:var(--c-film)" data-i18n="s2a">Boom to final mix</span><span style="--lane:var(--c-ai)" data-i18n="s2b">Claude to MIDI/USB to MPC</span></div></div>
+    <div class="step"><span class="n"><b data-i18n="step" style="font-weight:400">STEP</b> 3</span><h4 data-i18n="s3h">Prototype against the clock</h4><p data-i18n="s3p">Rehearsals, changeovers and six-week sprints all reward fast, tested iterations.</p>
+      <div class="eg"><span style="--lane:var(--c-live)" data-i18n="s3a">Festival changeovers</span><span style="--lane:var(--c-code)" data-i18n="s3b">TDD with Jest and RSpec</span></div></div>
+    <div class="step"><span class="n"><b data-i18n="step" style="font-weight:400">STEP</b> 4</span><h4 data-i18n="s4h">Ship for a live audience</h4><p data-i18n="s4p">There is no second take. Build for reliability and keep it running after opening night.</p>
+      <div class="eg"><span style="--lane:var(--c-hw)" data-i18n="s4a">24-month maintenance plan</span><span style="--lane:var(--c-civic)" data-i18n="s4b">Policy campaign for the scene</span></div></div>
+  </section>
+
+  <footer>
+    <a href="https://github.com/andym80" target="_blank" rel="noopener">github.com/andym80</a>
+    <a href="https://andymenutti.vercel.app" target="_blank" rel="noopener">andymenutti.vercel.app</a>
+    <a href="https://www.linkedin.com/in/andres-menutti" target="_blank" rel="noopener">linkedin.com/in/andres-menutti</a>
+    <span>WhatsApp +54 11 3455 0050</span>
+    <span>menuttiandres@gmail.com</span>
+    <span data-i18n="keys">Space: play/pause · ← →: chapters</span>
+  </footer>
+</div>
+
+<script>
+(() => {
+  const Y0 = 2000, Y1 = 2027, SPAN = Y1 - Y0, HOLD = 7000;
+  const pos = y => (y - Y0) / SPAN;
+
+  const LANES = [
+    { id: 'film',  name: 'Film & post',            s: 'Film',  hz: 220.0 },
+    { id: 'stage', name: 'Theatre, dance, immersive', s: 'Stage', hz: 261.6 },
+    { id: 'live',  name: 'Live & festivals',       s: 'Live',  hz: 196.0 },
+    { id: 'civic', name: 'Business & advocacy',    s: 'Org',   hz: 174.6 },
+    { id: 'hw',    name: 'Sound art & hardware',   s: 'Art/HW',hz: 329.6 },
+    { id: 'code',  name: 'Full-stack web',         s: 'Web',   hz: 392.0 },
+    { id: 'ai',    name: 'AI & protocols',         s: 'AI',    hz: 440.0 },
+  ];
+
+  const CH = [
+    { id: 'film', lane: 'film', at: 2001, years: '2001 – 2004 · Madrid',
+      title: 'Film sound school, then the set',
+      ctx: 'ECAM, Escuela de Cine de Madrid: diploma in film sound. Then sound design, mixing and boom operation on more than 40 films in Spain.',
+      prob: 'Capture clean dialogue on noisy locations and build each film’s sonic world in post, inside a fixed schedule and budget.',
+      sol: 'Boom and mic craft on set; editing, design and mix in post. The first lesson in following a signal from source to master.',
+      tags: ['Boom operation', 'Post-production', 'Mixing', '40+ films'],
+      carry: 'Signal-flow thinking, later used in firmware and device protocols.' },
+    { id: 'theatre', lane: 'stage', at: 2004, years: '2000s – present · Buenos Aires',
+      title: 'Theatre and dance: sound that follows bodies',
+      ctx: 'Composer and sound designer for more than 20 theatre and contemporary dance productions.',
+      prob: 'A live show never runs the same way twice. Cues have to breathe with dancers and actors instead of following a locked edit.',
+      sol: 'Original scores and cue systems built for flexible timing, rehearsed directly with directors and choreographers.',
+      tags: ['Composition', 'Cue design', 'Contemporary dance', '20+ productions'],
+      carry: 'Designing for unpredictable real-time input, later the core of interactive installations.' },
+    { id: 'fuerza', lane: 'stage', at: 2007, years: 'Live · immersive',
+      title: 'Fuerza Bruta: sound in mid-air',
+      ctx: 'Live sound design for Fuerza Bruta’s aerial, immersive performances.',
+      prob: 'Performers fly over a standing, moving audience. There is no fixed stage and no fixed listening position.',
+      sol: 'Live sound design for a space where the audience is inside the show, mixing for movement, scale and impact.',
+      tags: ['Immersive', 'Aerial performance', 'Live mix'],
+      carry: 'Spatial thinking, later applied to spatial audio and multi-speaker pieces.' },
+    { id: 'festivals', lane: 'live', at: 2009, years: 'Belgium · Germany · Netherlands',
+      title: 'Festival stages in Europe',
+      ctx: 'Live sound engineering and performance at I Love Techno (Belgium), Nature One (Germany) and Awakenings (Netherlands).',
+      prob: 'Huge crowds, tight changeovers, no second take. Any failure is heard by thousands of people at once.',
+      sol: 'Live engineering under pressure: fast system checks, redundancy and calm decisions at scale.',
+      tags: ['Live engineering', 'Large-scale events', 'International'],
+      carry: 'Reliability under pressure, later needed for unattended public installations.' },
+    { id: 'business', lane: 'civic', at: 2010.5, years: 'Buenos Aires',
+      title: 'Running the business side',
+      ctx: 'A professional audio studio in Buenos Aires, and AMI Bookings, an artist management and booking agency.',
+      prob: 'Coordinate artists, venues, logistics and budgets for large-scale event production.',
+      sol: 'Booking, artist management and production operations, run alongside studio recording work.',
+      tags: ['Studio owner', 'Artist management', 'Event production'],
+      carry: 'Owning delivery end to end, later the founder role on OMNI.' },
+    { id: 'puracepa', lane: 'stage', at: 2012, years: 'Live performance',
+      title: 'Pura Cepa: performer and system at once',
+      ctx: 'Hybrid sound and visual performer using real-time looping and percussion.',
+      prob: 'Build a complete live set alone, where every layer is played and captured in the moment.',
+      sol: 'A live looping rig that combines percussion, sound and visuals, all run by one performer.',
+      tags: ['Live looping', 'Percussion', 'Audiovisual'],
+      carry: 'Controlling a rig in real time, later the idea behind the Ableton and MPC servers.' },
+    { id: 'grants', lane: 'hw', at: 2015, years: '2010 · 2015 · 2017 · 2021',
+      title: 'Sound art, recognized and funded',
+      ctx: 'Gobierno de la Ciudad de Buenos Aires (2010), UNA Mención Arte Sonoro (2015), Plataforma Futuro, Cultura Nación (2017), Fondo Nacional de las Artes (2021).',
+      prob: 'Turn experimental sound ideas into funded, exhibited work that a jury can trust.',
+      sol: 'Clear proposals, technical plans and finished pieces, recognized across more than a decade.',
+      tags: ['Sound art', 'Grants', 'Proposals'],
+      carry: 'Writing specs a jury trusts, later used for the Sónar+D open call.' },
+    { id: 'microverse', lane: 'code', at: 2022, years: '2022 – 2023 · Remote',
+      title: 'Retraining as a full-stack developer',
+      ctx: 'Microverse: a remote, project-based software engineering program.',
+      prob: 'Moving from audio into software meant new languages, new tools and working in distributed teams across time zones.',
+      sol: 'Pair programming every day, automated testing with Jest, RSpec and Capybara, and Rails and React projects shipped on deadline.',
+      tags: ['Ruby on Rails', 'React', 'TDD', 'Remote pairing'],
+      carry: 'The same habit as rehearsal: iterate, test, then ship.' },
+    { id: 'omni', lane: 'hw', at: 2022.5, years: '2022 – present',
+      title: 'OMNI: generative sound in clay',
+      ctx: 'Founder and lead builder of a generative AI sound installation on the Japanese idea of “ma”, with custom ceramic speakers funded by Argentina’s Fondo Nacional de las Artes.',
+      prob: 'Make ceramic objects sound, respond to people nearby, and run without supervision in a public exhibition.',
+      sol: 'Surface exciters embedded in ceramic discs, ESP32 capacitive sensor arrays, a generative engine using the OpenAI and Anthropic APIs, and reliability planning for exhibition.',
+      tags: ['ESP32', 'Transducers', 'Generative audio', 'AI APIs'],
+      carry: 'Hardware, software and art working as one system.' },
+    { id: 'clients', lane: 'code', at: 2023, years: 'Client & product work',
+      title: 'Platforms for very different users',
+      ctx: 'A curated video CMS for a Dubai media platform (WordPress + Rails), an inclusive e-learning site with Stripe for Fundación Baccigalupo, a Rails + React yacht booking app, a Web3 DAO interface and AR/VR prototypes.',
+      prob: 'Each domain had its own users and rules: media curation, accessible learning, payments, bookings and governance.',
+      sol: 'Choosing the stack per problem and owning front end, back end and payments end to end.',
+      tags: ['CMS', 'Stripe', 'Accessibility', 'Web3', 'XR'],
+      carry: 'Designing for many audiences, the base of UX sound and interaction work.' },
+    { id: 'mcp', lane: 'ai', at: 2023.6, years: '2023 – present',
+      title: 'Connecting Claude to instruments',
+      ctx: 'MCP servers linking Claude to music hardware: TypeScript real-time control for Ableton Live and a MIDI/USB server for the Akai MPC Live II. Also OMNI Remote, a Next.js PWA for phone control, and a political AI tool using NLP sentiment analysis and LLM prompts.',
+      prob: 'Let an AI model and a phone talk to music hardware in real time, without dropouts.',
+      sol: 'Defined device communication and control protocols, and integrated front end, back end and hardware layers.',
+      tags: ['MCP', 'TypeScript', 'MIDI/USB', 'Next.js PWA', 'NLP'],
+      carry: 'The live-looping rig again, now with an AI in the loop.' },
+    { id: 'a16z', lane: 'ai', at: 2024, years: '2024 · 6 weeks',
+      title: '1 of 300 projects, from 32,000 applicants',
+      ctx: 'Selected builder in a six-week program under a16z, Y Combinator and Buildspace mentorship, with OMNI as the project.',
+      prob: 'Take an original product from concept to a working, demo-ready build in six weeks, against fixed milestones.',
+      sol: 'Architecture decisions, hardware/software integration and weekly milestone delivery, reviewed by mentors and peers.',
+      tags: ['a16z', 'Y Combinator', 'Buildspace', 'Product sprint'],
+      carry: 'Shipping on a clock, the discipline behind everything since.' },
+    { id: 'mux', lane: 'civic', at: 2025, years: '2025',
+      title: 'Policy work for the scene',
+      ctx: 'Founding member of MUX (Músicxs Escénicxs), an advocacy organization for scenic musicians.',
+      prob: 'Decreto 138/2025 put the working conditions of scenic musicians at risk.',
+      sol: 'Led the legal and public-policy campaign against the decree.',
+      tags: ['Advocacy', 'Public policy', 'Organizing'],
+      carry: 'Systems thinking, applied to institutions instead of signals.' },
+    { id: 'ripple', lane: 'hw', at: 2026.4, years: 'Open Call 2027',
+      title: 'RIPPLE//OMNI: a permanent installation',
+      ctx: 'Submitted to the Sónar+D / Fundación Cotec KNOWCASE Open Call 2027.',
+      prob: 'Move from an exhibition piece to permanent public art that runs for years with little intervention.',
+      sol: '7 to 12 ceramic discs, surface exciters, capacitive sensors and a dedicated audio-engine mini-PC, with a technical spec, an exhibition-grade reliability plan and a 24-month maintenance framework.',
+      tags: ['Public art', 'Reliability', 'Maintenance plan'],
+      carry: 'Twenty-five years of craft, combined in one piece.' },
+  ];
+
+  const CLIPS = [
+    { lane: 'film',  a: 2001, b: 2004, row: 0, label: 'ECAM Madrid', ch: 'film' },
+    { lane: 'film',  a: 2003, b: 2010, row: 1, label: '40+ films · Spain', ch: 'film', approx: true },
+    { lane: 'stage', a: 2000, b: 2026.95, row: 0, label: 'Theatre & dance · 20+ productions', ch: 'theatre', approx: true },
+    { lane: 'stage', a: 2006, b: 2010, row: 1, label: 'Fuerza Bruta', ch: 'fuerza', approx: true },
+    { lane: 'stage', a: 2011, b: 2016, row: 1, label: 'Pura Cepa', ch: 'puracepa', approx: true },
+    { lane: 'live',  a: 2008, b: 2019, row: 0, label: 'I Love Techno · Nature One · Awakenings', ch: 'festivals', approx: true },
+    { lane: 'civic', a: 2005, b: 2026.95, row: 0, label: 'Studio BA · AMI Bookings', ch: 'business', approx: true },
+    { lane: 'civic', a: 2025, b: 2026.95, row: 1, label: 'MUX', ch: 'mux' },
+    { lane: 'hw',    a: 2022, b: 2026.95, row: 0, label: 'OMNI', ch: 'omni' },
+    { lane: 'hw',    a: 2026, b: 2027, row: 1, label: 'RIPPLE', ch: 'ripple' },
+    { lane: 'code',  a: 2022, b: 2023, row: 0, label: 'Microverse', ch: 'microverse' },
+    { lane: 'code',  a: 2023, b: 2025.5, row: 1, label: 'Client platforms', ch: 'clients', approx: true },
+    { lane: 'ai',    a: 2023, b: 2026.95, row: 0, label: 'MCP servers · OMNI Remote', ch: 'mcp' },
+    { lane: 'ai',    a: 2024, b: 2024.5, row: 1, label: 'a16z × YC', ch: 'a16z' },
+  ];
+  const MARKS = [ [2010, 'grants'], [2015, 'grants'], [2017, 'grants'], [2021, 'grants'] ];
+
+  // ---------- Spanish ----------
+  const LANE_ES = {
+    film: ['Cine y post', 'Cine'], stage: ['Teatro, danza, inmersivo', 'Escena'], live: ['En vivo y festivales', 'Vivo'],
+    civic: ['Gestión y activismo', 'Gestión'], hw: ['Arte sonoro y hardware', 'Arte/HW'], code: ['Desarrollo full-stack', 'Web'], ai: ['IA y protocolos', 'IA'],
+  };
+  const CLIP_ES = {
+    '40+ films · Spain': '40+ películas · España',
+    'Theatre & dance · 20+ productions': 'Teatro y danza · 20+ producciones',
+    'Studio BA · AMI Bookings': 'Estudio BA · AMI Bookings',
+    'Client platforms': 'Plataformas para clientes',
+    'MCP servers · OMNI Remote': 'Servidores MCP · OMNI Remote',
+  };
+  const CH_ES = {
+    film: { years: '2001 – 2004 · Madrid', title: 'Escuela de cine, y después el rodaje',
+      ctx: 'ECAM, Escuela de Cine de Madrid: diplomatura en sonido para cine. Después, diseño de sonido, mezcla y microfonista en más de 40 películas en España.',
+      prob: 'Grabar diálogos limpios en locaciones ruidosas y construir el mundo sonoro de cada película en postproducción, con agenda y presupuesto cerrados.',
+      sol: 'Técnica de boom y microfonía en rodaje; edición, diseño y mezcla en post. La primera lección sobre seguir una señal desde la fuente hasta el máster.',
+      tags: ['Microfonista', 'Postproducción', 'Mezcla', '40+ películas'],
+      carry: 'Pensar en flujo de señal, algo que después usé en firmware y protocolos de dispositivos.' },
+    theatre: { years: 'Desde los 2000 · Buenos Aires', title: 'Teatro y danza: sonido que sigue a los cuerpos',
+      ctx: 'Compositor y diseñador sonoro en más de 20 producciones de teatro y danza contemporánea.',
+      prob: 'Una función en vivo nunca sale igual dos veces. Los cues tienen que respirar con bailarines y actores, no seguir una edición fija.',
+      sol: 'Música original y sistemas de cues pensados para tiempos flexibles, ensayados junto a directores y coreógrafos.',
+      tags: ['Composición', 'Diseño de cues', 'Danza contemporánea', '20+ producciones'],
+      carry: 'Diseñar para estímulos impredecibles en tiempo real, la base de las instalaciones interactivas.' },
+    fuerza: { years: 'En vivo · inmersivo', title: 'Fuerza Bruta: sonido en el aire',
+      ctx: 'Diseño sonoro en vivo para las performances aéreas e inmersivas de Fuerza Bruta.',
+      prob: 'Los performers vuelan sobre un público de pie y en movimiento. No hay escenario fijo ni punto de escucha fijo.',
+      sol: 'Diseño sonoro en vivo para un espacio donde el público está dentro del show, mezclando para el movimiento, la escala y el impacto.',
+      tags: ['Inmersivo', 'Performance aérea', 'Mezcla en vivo'],
+      carry: 'Pensamiento espacial, aplicado después al audio espacial y a piezas con muchos parlantes.' },
+    festivals: { years: 'Bélgica · Alemania · Países Bajos', title: 'Escenarios de festivales en Europa',
+      ctx: 'Ingeniería de sonido en vivo y performance en I Love Techno (Bélgica), Nature One (Alemania) y Awakenings (Países Bajos).',
+      prob: 'Multitudes enormes, cambios de escenario ajustados y sin segunda toma. Cualquier falla la escuchan miles de personas a la vez.',
+      sol: 'Ingeniería en vivo bajo presión: chequeos rápidos del sistema, redundancia y decisiones con calma a gran escala.',
+      tags: ['Sonido en vivo', 'Eventos masivos', 'Internacional'],
+      carry: 'Confiabilidad bajo presión, necesaria después en instalaciones públicas sin supervisión.' },
+    business: { years: 'Buenos Aires', title: 'El lado del negocio',
+      ctx: 'Un estudio de audio profesional en Buenos Aires y AMI Bookings, agencia de management y booking de artistas.',
+      prob: 'Coordinar artistas, venues, logística y presupuestos para la producción de eventos a gran escala.',
+      sol: 'Booking, management de artistas y operaciones de producción, en paralelo al trabajo de estudio.',
+      tags: ['Dueño de estudio', 'Management de artistas', 'Producción de eventos'],
+      carry: 'Hacerme cargo de la entrega de punta a punta, después el rol de fundador en OMNI.' },
+    puracepa: { years: 'Performance en vivo', title: 'Pura Cepa: performer y sistema a la vez',
+      ctx: 'Performer híbrido de sonido e imagen, con looping en tiempo real y percusión.',
+      prob: 'Armar un set en vivo completo en solitario, donde cada capa se toca y se graba en el momento.',
+      sol: 'Un rig de looping en vivo que combina percusión, sonido y visuales, manejado por una sola persona.',
+      tags: ['Looping en vivo', 'Percusión', 'Audiovisual'],
+      carry: 'Controlar un rig en tiempo real, la idea detrás de los servidores para Ableton y la MPC.' },
+    grants: { years: '2010 · 2015 · 2017 · 2021', title: 'Arte sonoro, reconocido y financiado',
+      ctx: 'Gobierno de la Ciudad de Buenos Aires (2010), UNA Mención Arte Sonoro (2015), Plataforma Futuro, Cultura Nación (2017), Fondo Nacional de las Artes (2021).',
+      prob: 'Convertir ideas sonoras experimentales en obra financiada y exhibida, que un jurado pueda respaldar.',
+      sol: 'Propuestas claras, planes técnicos y piezas terminadas, reconocidas durante más de una década.',
+      tags: ['Arte sonoro', 'Becas', 'Propuestas'],
+      carry: 'Escribir especificaciones que convencen a un jurado, algo que usé después en la convocatoria de Sónar+D.' },
+    microverse: { years: '2022 – 2023 · Remoto', title: 'Reconversión a desarrollador full-stack',
+      ctx: 'Microverse: programa remoto de ingeniería de software basado en proyectos.',
+      prob: 'Pasar del audio al software implicó nuevos lenguajes, nuevas herramientas y trabajar en equipos distribuidos en distintos husos horarios.',
+      sol: 'Pair programming diario, testing automatizado con Jest, RSpec y Capybara, y proyectos en Rails y React entregados a tiempo.',
+      tags: ['Ruby on Rails', 'React', 'TDD', 'Pair programming remoto'],
+      carry: 'El mismo hábito que en los ensayos: iterar, probar y recién ahí estrenar.' },
+    omni: { years: '2022 – presente', title: 'OMNI: sonido generativo en cerámica',
+      ctx: 'Fundador y builder principal de una instalación sonora generativa con IA basada en el concepto japonés de “ma”, con parlantes cerámicos propios financiados por el Fondo Nacional de las Artes.',
+      prob: 'Hacer que objetos de cerámica suenen, reaccionen a las personas cercanas y funcionen sin supervisión en una exhibición pública.',
+      sol: 'Excitadores de superficie dentro de discos cerámicos, matrices de sensores capacitivos con ESP32, un motor generativo con las APIs de OpenAI y Anthropic, y un plan de confiabilidad para exhibición.',
+      tags: ['ESP32', 'Transductores', 'Audio generativo', 'APIs de IA'],
+      carry: 'Hardware, software y arte funcionando como un solo sistema.' },
+    clients: { years: 'Clientes y producto', title: 'Plataformas para usuarios muy distintos',
+      ctx: 'Un CMS de video curado para una plataforma de medios en Dubái (WordPress + Rails), un sitio de e-learning inclusivo con Stripe para la Fundación Baccigalupo, una app de alquiler de yates en Rails + React, una interfaz para una DAO Web3 y prototipos de AR/VR.',
+      prob: 'Cada dominio tenía sus propios usuarios y reglas: curaduría de medios, aprendizaje accesible, pagos, reservas y gobernanza.',
+      sol: 'Elegir el stack según el problema y encargarme de front end, back end y pagos de punta a punta.',
+      tags: ['CMS', 'Stripe', 'Accesibilidad', 'Web3', 'XR'],
+      carry: 'Diseñar para públicos diversos, la base del trabajo en sonido UX e interacción.' },
+    mcp: { years: '2023 – presente', title: 'Conectar a Claude con instrumentos',
+      ctx: 'Servidores MCP que conectan a Claude con hardware musical: control en tiempo real de Ableton Live en TypeScript y un servidor MIDI/USB para la Akai MPC Live II. Además, OMNI Remote, una PWA en Next.js para controlar ambos desde el celular, y una herramienta de IA para política con análisis de sentimiento (NLP) y prompts para LLM.',
+      prob: 'Lograr que un modelo de IA y un teléfono se comuniquen con hardware musical en tiempo real, sin cortes.',
+      sol: 'Definí la comunicación con los dispositivos y los protocolos de control, e integré front end, back end y hardware.',
+      tags: ['MCP', 'TypeScript', 'MIDI/USB', 'PWA en Next.js', 'NLP'],
+      carry: 'El rig de looping otra vez, ahora con una IA en el circuito.' },
+    a16z: { years: '2024 · 6 semanas', title: '1 de 300 proyectos, entre 32.000 postulantes',
+      ctx: 'Builder seleccionado en un programa de seis semanas con mentoría de a16z, Y Combinator y Buildspace, con OMNI como proyecto.',
+      prob: 'Llevar un producto original del concepto a un prototipo funcional y listo para demo en seis semanas, con hitos fijos.',
+      sol: 'Decisiones de arquitectura, integración hardware/software y entregas semanales revisadas por mentores y pares.',
+      tags: ['a16z', 'Y Combinator', 'Buildspace', 'Sprint de producto'],
+      carry: 'Entregar contra reloj, la disciplina detrás de todo lo que vino después.' },
+    mux: { years: '2025', title: 'Política pública para la escena',
+      ctx: 'Miembro fundador de MUX (Músicxs Escénicxs), organización que defiende los derechos de lxs músicxs escénicxs.',
+      prob: 'El Decreto 138/2025 ponía en riesgo las condiciones de trabajo de lxs músicxs escénicxs.',
+      sol: 'Lideré la campaña legal y de política pública contra el decreto.',
+      tags: ['Activismo', 'Política pública', 'Organización'],
+      carry: 'Pensamiento sistémico, aplicado a instituciones en lugar de señales.' },
+    ripple: { years: 'Convocatoria 2027', title: 'RIPPLE//OMNI: una instalación permanente',
+      ctx: 'Presentado a la convocatoria Sónar+D / Fundación Cotec KNOWCASE Open Call 2027.',
+      prob: 'Pasar de una pieza de exhibición a arte público permanente que funcione durante años con mínima intervención.',
+      sol: 'De 7 a 12 discos cerámicos, excitadores de superficie, sensores capacitivos y una mini-PC dedicada al motor de audio, con especificación técnica, plan de confiabilidad de nivel exhibición y un plan de mantenimiento de 24 meses.',
+      tags: ['Arte público', 'Confiabilidad', 'Plan de mantenimiento'],
+      carry: 'Veinticinco años de oficio, combinados en una sola pieza.' },
+  };
+  const UI = {
+    en: {
+      sub: 'Sound designer → audio engineer → full-stack &amp; AI builder · Buenos Aires', copy: 'Copy', copied: 'Copied', tcLab: 'YEAR · CHAPTER',
+      shH: 'Seven tracks, one career', shP: 'Click a region to jump there. Click a track name to solo that branch.',
+      lg1: 'Dates stated on the CV', lg2: 'Undated on the CV, placed approximately', lg3: 'Grant or distinction',
+      mH: 'Different rooms, the same way of solving problems',
+      mP: 'A film set, a festival stage, a ceramic speaker and an MCP server ask the same questions: what is the space, where does the signal go, and what happens when it fails in front of people?',
+      step: 'STEP',
+      s1h: 'Listen to the space', s1p: 'Read the room, the bodies, the users or the hardware before deciding anything.', s1a: 'Choreographers and actors', s1b: 'Audience moving near ceramic discs',
+      s2h: 'Map the signal flow', s2p: 'Source, routing, output. Microphones and cues, or sensors, firmware and APIs.', s2a: 'Boom to final mix', s2b: 'Claude to MIDI/USB to MPC',
+      s3h: 'Prototype against the clock', s3p: 'Rehearsals, changeovers and six-week sprints all reward fast, tested iterations.', s3a: 'Festival changeovers', s3b: 'TDD with Jest and RSpec',
+      s4h: 'Ship for a live audience', s4p: 'There is no second take. Build for reliability and keep it running after opening night.', s4a: '24-month maintenance plan', s4b: 'Policy campaign for the scene',
+      keys: 'Space: play/pause · ← →: chapters', trk: 'TRACK',
+      ctx: 'Context', prob: 'Problem', sol: 'Solved by', carry: 'Carries forward:', ch: 'CH', soundOn: 'SOUND ON', soundOff: 'SOUND OFF', grant: 'Grant', solo: 'Solo',
+    },
+    es: {
+      sub: 'Diseñador sonoro → ingeniero de audio → builder full-stack e IA · Buenos Aires', copy: 'Copiar', copied: 'Copiado', tcLab: 'AÑO · CAPÍTULO',
+      shH: 'Siete pistas, una carrera', shP: 'Hacé clic en una región para ir a ese capítulo. Hacé clic en el nombre de una pista para escuchar solo esa rama.',
+      lg1: 'Fechas indicadas en el CV', lg2: 'Sin fecha en el CV, ubicado de forma aproximada', lg3: 'Beca o distinción',
+      mH: 'Distintos espacios, la misma forma de resolver problemas',
+      mP: 'Un rodaje, un escenario de festival, un parlante de cerámica y un servidor MCP plantean las mismas preguntas: ¿cómo es el espacio, hacia dónde va la señal y qué pasa si falla frente al público?',
+      step: 'PASO',
+      s1h: 'Escuchar el espacio', s1p: 'Leer la sala, los cuerpos, los usuarios o el hardware antes de decidir nada.', s1a: 'Coreógrafos y actores', s1b: 'Público que se mueve cerca de los discos cerámicos',
+      s2h: 'Mapear el flujo de señal', s2p: 'Fuente, ruteo, salida. Micrófonos y cues, o sensores, firmware y APIs.', s2a: 'Del boom a la mezcla final', s2b: 'De Claude a MIDI/USB a la MPC',
+      s3h: 'Prototipar contra reloj', s3p: 'Ensayos, cambios de escenario y sprints de seis semanas premian iteraciones rápidas y probadas.', s3a: 'Cambios de escenario en festivales', s3b: 'TDD con Jest y RSpec',
+      s4h: 'Estrenar ante público en vivo', s4p: 'No hay segunda toma. Construir para que sea confiable y siga funcionando después del estreno.', s4a: 'Plan de mantenimiento de 24 meses', s4b: 'Campaña de política pública para la escena',
+      keys: 'Espacio: play/pausa · ← →: capítulos', trk: 'PISTA',
+      ctx: 'Contexto', prob: 'Problema', sol: 'Cómo lo resolví', carry: 'Lo que se lleva:', ch: 'CAP', soundOn: 'SONIDO ON', soundOff: 'SONIDO OFF', grant: 'Beca', solo: 'Solo',
+    },
+  };
+  let lang = 'en';
+  const t = k => UI[lang][k];
+  const chText = c => lang === 'es' ? { ...c, ...CH_ES[c.id] } : c;
+  const laneName = l => lang === 'es' ? LANE_ES[l.id][0] : l.name;
+  const laneShort = l => lang === 'es' ? LANE_ES[l.id][1] : l.s;
+
+  const laneById = Object.fromEntries(LANES.map(l => [l.id, l]));
+  const chIndex = Object.fromEntries(CH.map((c, i) => [c.id, i]));
+  const cssVar = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const laneColor = id => cssVar('--c-' + id);
+
+  // ---------- build timeline ----------
+  const lanesEl = document.getElementById('lanes');
+  const ruler = document.getElementById('ruler');
+  for (let y = 2000; y <= 2025; y += 5) {
+    const t = document.createElement('span');
+    t.className = 'tick'; t.style.left = (pos(y) * 100) + '%'; t.textContent = y;
+    ruler.appendChild(t);
+  }
+  const clipEls = [];
+  const laneEls = {};
+  const playhead = lanesEl.querySelector('.playhead');
+  LANES.forEach(l => {
+    const row = document.createElement('div');
+    row.className = 'row lane'; row.style.setProperty('--lane', `var(--c-${l.id})`);
+    const name = document.createElement('button');
+    name.className = 'lname'; name.setAttribute('aria-pressed', 'false');
+    name.title = 'Solo ' + l.name;
+    name.innerHTML = `<i class="sw"></i><span class="nm"><span class="l">${l.name}</span><span class="s">${l.s}</span></span><span class="solo">S</span>`;
+    name.addEventListener('click', () => setSolo(solo === l.id ? null : l.id));
+    const track = document.createElement('div'); track.className = 'track';
+    row.append(name, track);
+    lanesEl.insertBefore(row, playhead);
+    laneEls[l.id] = { row, name, track };
+  });
+  CLIPS.forEach(c => {
+    const el = document.createElement('button');
+    el.className = 'clip' + (c.approx ? ' approx' : '');
+    el.style.left = (pos(c.a) * 100) + '%';
+    el.style.width = ((c.b - c.a) / SPAN * 100) + '%';
+    el.style.top = (7 + c.row * 24) + 'px';
+    el.textContent = c.label; el.title = c.label;
+    el.addEventListener('click', () => { go(chIndex[c.ch]); });
+    laneEls[c.lane].track.appendChild(el);
+    clipEls.push({ el, ch: c.ch, a: c.a, label: c.label });
+  });
+  MARKS.forEach(([y, ch]) => {
+    const el = document.createElement('button');
+    el.className = 'mark'; el.style.left = (pos(y) * 100) + '%'; el.style.top = '35px';
+    el.title = 'Grant · ' + y; el.setAttribute('aria-label', 'Grant ' + y);
+    el.addEventListener('click', () => go(chIndex[ch]));
+    laneEls.hw.track.appendChild(el);
+    clipEls.push({ el, ch, a: y, year: y });
+  });
+
+  function applyLang(next) {
+    lang = next === 'es' ? 'es' : 'en';
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(el => { el.innerHTML = t(el.dataset.i18n); });
+    document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+    LANES.forEach(l => {
+      const n = laneEls[l.id].name;
+      n.querySelector('.l').textContent = laneName(l);
+      n.querySelector('.s').textContent = laneShort(l);
+      n.title = t('solo') + ' · ' + laneName(l);
+    });
+    clipEls.forEach(o => {
+      if (o.year) { o.el.title = t('grant') + ' · ' + o.year; o.el.setAttribute('aria-label', o.el.title); }
+      else { const s = lang === 'es' ? (CLIP_ES[o.label] || o.label) : o.label; o.el.textContent = s; o.el.title = s; }
+    });
+    if (typeof renderSound === 'function') renderSound();
+  }
+
+  // ---------- state ----------
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let idx = 0, playing = !reduce, solo = null, elapsed = 0;
+  let p = pos(CH[0].at), target = p;
+  const card = document.getElementById('card');
+  const tc = document.getElementById('tc');
+  const playBtn = document.getElementById('play');
+  const playIcon = document.getElementById('playIcon');
+  let progEl = null;
+
+  function order() { return CH.map((c, i) => i).filter(i => !solo || CH[i].lane === solo); }
+
+  function renderCard(c0, i) {
+    const c = chText(c0);
+    const lane = laneById[c.lane];
+    card.style.setProperty('--lane', `var(--c-${c.lane})`);
+    card.innerHTML = `
+      <div class="eyebrow"><span class="chip">${laneName(lane)}</span><span>${c.years}</span><span>${t('ch')} ${String(i + 1).padStart(2, '0')} / ${CH.length}</span></div>
+      <h2>${c.title}</h2>
+      <dl class="rows">
+        <dt>${t('ctx')}</dt><dd>${c.ctx}</dd>
+        <dt class="prob">${t('prob')}</dt><dd>${c.prob}</dd>
+        <dt>${t('sol')}</dt><dd>${c.sol}</dd>
+      </dl>
+      <div class="tags">${c.tags.map(x => `<span>${x}</span>`).join('')}</div>
+      <div class="carry"><b>${t('carry')}</b> ${c.carry}</div>
+      <div class="prog" aria-hidden="true"><i></i></div>`;
+    progEl = card.querySelector('.prog i');
+    if (!reduce) { card.classList.remove('swap'); void card.offsetWidth; card.classList.add('swap'); }
+  }
+
+  function go(i, fromAuto) {
+    idx = (i + CH.length) % CH.length;
+    elapsed = 0;
+    const c = CH[idx];
+    target = pos(c.at);
+    if (reduce) p = target;
+    renderCard(c, idx);
+    clipEls.forEach(o => {
+      o.el.classList.toggle('on', o.ch === c.id);
+      o.el.classList.toggle('past', o.a <= c.at && o.ch !== c.id);
+    });
+    tone(laneById[c.lane].hz);
+    if (!fromAuto) wavePhaseKick = 1;
+  }
+
+  function step(dir) {
+    const ord = order();
+    let k = ord.indexOf(idx);
+    if (k === -1) k = dir > 0 ? -1 : 0;
+    go(ord[(k + dir + ord.length) % ord.length]);
+  }
+
+  function setSolo(id) {
+    solo = id;
+    lanesEl.classList.toggle('soloing', !!id);
+    LANES.forEach(l => {
+      laneEls[l.id].row.classList.toggle('soloed', l.id === id);
+      laneEls[l.id].name.setAttribute('aria-pressed', String(l.id === id));
+    });
+    if (id && CH[idx].lane !== id) go(order()[0]);
+  }
+
+  function setPlaying(v) {
+    playing = v;
+    playBtn.setAttribute('aria-label', v ? 'Pause' : 'Play');
+    playIcon.innerHTML = v ? '<path d="M4 2h3v12H4zM9 2h3v12H9z"/>' : '<path d="M4 2v12l10-6z"/>';
+  }
+
+  playBtn.addEventListener('click', () => setPlaying(!playing));
+  document.getElementById('prev').addEventListener('click', () => step(-1));
+  document.getElementById('next').addEventListener('click', () => step(1));
+  document.addEventListener('keydown', e => {
+    if (e.target.closest && e.target.closest('button') && e.key === ' ') return;
+    if (e.key === ' ') { e.preventDefault(); setPlaying(!playing); }
+    else if (e.key === 'ArrowRight') step(1);
+    else if (e.key === 'ArrowLeft') step(-1);
+  });
+
+  // ---------- sound ----------
+  let actx = null, soundOn = false;
+  const soundBtn = document.getElementById('sound');
+  function renderSound() {
+    soundBtn.setAttribute('aria-pressed', String(soundOn));
+    soundBtn.textContent = soundOn ? t('soundOn') : t('soundOff');
+  }
+  soundBtn.addEventListener('click', () => {
+    soundOn = !soundOn;
+    renderSound();
+    if (soundOn) {
+      try {
+        actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+        actx.resume && actx.resume();
+        tone(laneById[CH[idx].lane].hz);
+      } catch (e) { soundOn = false; }
+    }
+  });
+  function tone(hz) {
+    if (!soundOn || !actx) return;
+    const t = actx.currentTime;
+    const g = actx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.09, t + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 2.2);
+    g.connect(actx.destination);
+    [[1, 1], [2.01, 0.35], [3.98, 0.12]].forEach(([m, a]) => {
+      const o = actx.createOscillator(); const og = actx.createGain();
+      o.type = 'sine'; o.frequency.value = hz * m; og.gain.value = a;
+      o.connect(og); og.connect(g); o.start(t); o.stop(t + 2.3);
+    });
+  }
+
+  // ---------- waveform ----------
+  const cv = document.getElementById('wave');
+  const g2 = cv.getContext('2d');
+  let W = 0, H = 0, dpr = 1, wavePhaseKick = 0;
+  function size() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const r = cv.getBoundingClientRect();
+    W = r.width; H = r.height;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    g2.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  new ResizeObserver(size).observe(cv);
+  size();
+
+  function drawWave(time) {
+    if (!W) return;
+    g2.clearRect(0, 0, W, H);
+    const col = laneColor(CH[idx].lane) || '#63a4ff';
+    const seed = idx * 1.37 + 0.5;
+    const mid = H * 0.5;
+    const narrow = W < 700;
+    const x0 = narrow ? 0 : Math.max(W * 0.42, Math.min(W * 0.62, 700));
+    const bar = 3, gap = 3;
+    const t = time / 1000;
+    const kick = wavePhaseKick;
+    g2.fillStyle = col;
+    for (let x = x0; x < W; x += bar + gap) {
+      const u = (x - x0) / Math.max(1, W - x0);
+      const env = Math.sin(Math.PI * Math.min(1, u * 1.05)) * (0.55 + 0.45 * Math.sin(u * 3 + seed));
+      const s = Math.sin(x * 0.021 + t * 1.6 + seed) * 0.5
+              + Math.sin(x * 0.057 - t * 2.3 + seed * 2) * 0.3
+              + Math.sin(x * 0.11 + t * 3.1) * 0.2;
+      const amp = Math.abs(s) * env * H * (narrow ? 0.22 : 0.36) * (1 + kick * 0.6) + 1;
+      g2.globalAlpha = narrow ? 0.12 : 0.22 + 0.25 * env;
+      g2.fillRect(x, mid - amp, bar, amp * 2);
+    }
+    g2.globalAlpha = 1;
+  }
+
+  // ---------- loop ----------
+  let last = performance.now();
+  function frame(now) {
+    const dt = Math.min(100, now - last); last = now;
+    if (playing) {
+      elapsed += dt;
+      if (elapsed >= HOLD) step(1);
+    }
+    p += (target - p) * (1 - Math.exp(-dt / 260));
+    wavePhaseKick *= Math.exp(-dt / 400);
+    lanesEl.style.setProperty('--p', p.toFixed(4));
+    tc.textContent = `${(Y0 + p * SPAN).toFixed(1)} · ${String(idx + 1).padStart(2, '0')}/${CH.length}`;
+    if (progEl) progEl.style.width = (Math.min(1, elapsed / HOLD) * 100).toFixed(1) + '%';
+    drawWave(reduce ? 0 : now);
+    requestAnimationFrame(frame);
+  }
+
+  // ---------- language + contact ----------
+  const langFromHash = () => (location.hash === '#es' ? 'es' : location.hash === '#en' ? 'en' : null);
+  function switchLang(l) { applyLang(l); renderCard(CH[idx], idx); }
+  document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => {
+    const l = b.dataset.lang;
+    try { history.replaceState(null, '', '#' + l); } catch (e) { location.hash = l; }
+    switchLang(l);
+  }));
+  window.addEventListener('hashchange', () => { const l = langFromHash(); if (l && l !== lang) switchLang(l); });
+  const copyBtn = document.getElementById('copy');
+  copyBtn.addEventListener('click', () => {
+    const mail = document.getElementById('mail');
+    const done = () => { copyBtn.textContent = t('copied'); setTimeout(() => { copyBtn.textContent = t('copy'); }, 1600); };
+    const fallback = () => { const r = document.createRange(); r.selectNodeContents(mail); const s = getSelection(); s.removeAllRanges(); s.addRange(r); };
+    try { navigator.clipboard.writeText(mail.textContent).then(done, fallback); } catch (e) { fallback(); }
+  });
+
+  applyLang(langFromHash() || ((navigator.language || '').toLowerCase().startsWith('es') ? 'es' : 'en'));
+  setPlaying(playing);
+  go(0, true);
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
