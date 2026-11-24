@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AgentMe Tour</title>
+<meta name="description" content="Recorrido visual por AgentMe (Press Manager AI), un agente de comunicación política con IA. Capturas reales de la app.">
+<meta name="theme-color" content="#0c111d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Same visual system as the multitrack CV: dark desk, AI & protocols lane color as accent. */
+:root {
+  color-scheme: dark;
+  --ink: #0c111d; --panel: #131a2b; --panel-2: #182136; --line: #253050;
+  --fg: #e9edf6; --muted: #93a0bd; --lane: #ad91ff;
+  --f-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--ink); color: var(--fg); font: 15px/1.6 var(--f-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 48px; }
+.wrap { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; }
+a { color: var(--fg); }
+:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; font-family: var(--f-mono); font-size: 0.8rem; }
+.top a { text-decoration: none; border-bottom: 1px solid var(--line); }
+.lang { display: inline-flex; border: 1px solid var(--line); border-radius: 7px; overflow: hidden; }
+.lang button { background: var(--panel-2); color: var(--muted); border: 0; padding: 6px 11px; font: inherit; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--fg); color: var(--ink); }
+.eyebrow { font-family: var(--f-mono); font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lane); display: flex; align-items: center; gap: 8px; }
+.eyebrow::before { content: ""; width: 9px; height: 9px; border-radius: 2px; background: var(--lane); }
+h1 { font-family: var(--f-display); font-weight: 800; font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.02; margin: 6px 0 0; letter-spacing: -0.015em; text-wrap: balance; }
+.lead { color: var(--muted); max-width: 68ch; margin: 0; font-size: 1.02rem; }
+.facts { display: flex; flex-wrap: wrap; gap: 6px; }
+.facts span { font-family: var(--f-mono); font-size: 0.72rem; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--line); }
+.notice { border-left: 3px solid var(--lane); padding: 8px 14px; color: var(--muted); font-size: 0.88rem; margin: 0; max-width: 80ch; }
+.step { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; padding-top: 18px; border-top: 1px solid var(--line); }
+.step header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+.step .n { font-family: var(--f-mono); font-size: 0.74rem; color: var(--muted); letter-spacing: 0.08em; }
+.step h2 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: 1.35rem; }
+.step p { margin: 0; color: var(--muted); max-width: 75ch; }
+.step img { width: 100%; height: auto; max-width: 100%; display: block; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); }
+footer { border-top: 1px solid var(--line); padding-top: 14px; font-family: var(--f-mono); font-size: 0.78rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 8px 22px; }
+[data-en] { display: none; }
+html[lang="en"] [data-es] { display: none; }
+html[lang="en"] [data-en] { display: revert; }
+.links { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { font-family: var(--f-mono); font-size: 0.82rem; text-decoration: none; padding: 8px 14px; border-radius: 7px; border: 1px solid var(--line); background: var(--panel-2); color: var(--fg); }
+.btn.live { background: var(--lane); border-color: var(--lane); color: var(--ink); font-weight: 500; }
+.btn:hover { border-color: var(--fg); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a href="/"><span data-es>← Volver al portfolio</span><span data-en>← Back to portfolio</span></a>
+    <div class="lang" role="group" aria-label="Idioma / Language"><button type="button" data-lang="es" aria-pressed="true">ES</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+  </div>
+
+  <header>
+    <span class="eyebrow"><span data-es>IA y protocolos · Tour visual</span><span data-en>AI & protocols · Visual tour</span></span>
+    <h1>AgentMe · Press Manager AI</h1>
+  </header>
+  <p class="lead">
+    <span data-es>Un agente de comunicación política: lee noticias, mide sentimiento y relevancia, y con un LLM (Anthropic u OpenAI) propone mensajes adaptados a cada partido y audiencia.</span>
+    <span data-en>A political communication agent: it reads the news, measures sentiment and relevance, and uses an LLM (Anthropic or OpenAI) to draft messages adapted to each party and audience.</span>
+  </p>
+  <div class="facts"><span>Next.js 15</span><span>React 19</span><span>TypeScript</span><span>Vercel AI SDK</span><span>Anthropic</span><span>OpenAI</span><span>Recharts</span><span>Tailwind · Radix UI</span></div>
+  <div class="links">
+    <a class="btn live" href="https://agent-me-nce8.vercel.app" target="_blank" rel="noopener"><span data-es>Abrir la app ↗</span><span data-en>Open the app ↗</span></a>
+    <a class="btn" href="https://github.com/andym80/AgentMe" target="_blank" rel="noopener"><span data-es>Ver el código en GitHub ↗</span><span data-en>View the code on GitHub ↗</span></a>
+  </div>
+  <p class="notice">
+    <span data-es>Capturas de la app real, sin clave de IA cargada: las noticias son datos de ejemplo de la propia app y la generación de mensajes con LLM se activa al cargar una clave en Configuración.</span>
+    <span data-en>Screenshots of the real app with no AI key loaded: the news items are the app's own sample data, and LLM message generation turns on once a key is added in Settings.</span>
+  </p>
+
+  <section class="step">
+    <header><span class="n">01</span><h2><span data-es>Inicio</span><span data-en>Home</span></h2></header>
+    <p><span data-es>Cabecera, estado de carga de los módulos y aviso para configurar la clave de IA. Las claves de OpenAI o Anthropic las pone cada usuario y quedan en su navegador.</span><span data-en>Header, module loading status and a prompt to add an AI key. Each user brings their own OpenAI or Anthropic key, stored in their own browser.</span></p>
+    <img src="img/inicio.jpg" width="2560" height="1800" loading="lazy" alt="Pantalla de inicio de Press Manager AI con el estado de carga y el aviso de configuración">
+  </section>
+  <section class="step">
+    <header><span class="n">02</span><h2><span data-es>Dashboard</span><span data-en>Dashboard</span></h2></header>
+    <p><span data-es>Noticias, sentimiento promedio, proyectos de ley y mensajes generados, con gráficos de sentimiento, tendencia de 7 días, categorías y fuentes.</span><span data-en>News count, average sentiment, bills and generated messages, with charts for sentiment, 7-day trend, categories and sources.</span></p>
+    <img src="img/dashboard.jpg" width="2560" height="1800" loading="lazy" alt="Dashboard de análisis político con indicadores y gráficos">
+  </section>
+  <section class="step">
+    <header><span class="n">03</span><h2><span data-es>Manager</span><span data-en>Manager</span></h2></header>
+    <p><span data-es>El generador de mensajes: elegís una noticia, configurás partido y audiencia, y el LLM propone un mensaje adaptado.</span><span data-en>The message generator: pick a news item, set party and audience, and the LLM drafts an adapted message.</span></p>
+    <img src="img/manager.jpg" width="2560" height="1800" loading="lazy" alt="Generador de mensajes políticos con la lista de noticias disponibles">
+  </section>
+  <section class="step">
+    <header><span class="n">04</span><h2><span data-es>Vista circular</span><span data-en>Circular view</span></h2></header>
+    <p><span data-es>Las noticias como nodos alrededor de los partidos: el tamaño indica relevancia y la distancia al centro, el impacto político.</span><span data-en>News as nodes around the parties: size shows relevance and distance from the center shows political impact.</span></p>
+    <img src="img/circular.jpg" width="2560" height="1800" loading="lazy" alt="Interfaz circular interactiva con partidos y noticias como nodos">
+  </section>
+  <section class="step">
+    <header><span class="n">05</span><h2><span data-es>Análisis técnico</span><span data-en>Technical analysis</span></h2></header>
+    <p><span data-es>Sentimiento, complejidad, temas y confiabilidad de las fuentes, con distribución por sentimiento y por complejidad.</span><span data-en>Sentiment, complexity, topics and source reliability, with sentiment and complexity distributions.</span></p>
+    <img src="img/analysis.jpg" width="2560" height="1800" loading="lazy" alt="Análisis técnico avanzado con métricas y gráficos de sentimiento y complejidad">
+  </section>
+  <section class="step">
+    <header><span class="n">06</span><h2><span data-es>Funciones avanzadas</span><span data-en>Advanced features</span></h2></header>
+    <p><span data-es>Panel para activar y configurar automatizaciones, exportación y funciones de IA experimentales.</span><span data-en>Panel to enable and configure automations, export and experimental AI features.</span></p>
+    <img src="img/advanced.jpg" width="2560" height="1800" loading="lazy" alt="Panel de características avanzadas">
+  </section>
+  <section class="step">
+    <header><span class="n">07</span><h2><span data-es>Configuración</span><span data-en>Settings</span></h2></header>
+    <p><span data-es>Estado del sistema, estadísticas de uso y acciones rápidas como actualizar noticias o limpiar la caché.</span><span data-en>System status, usage stats and quick actions such as refreshing news or clearing the cache.</span></p>
+    <img src="img/settings.jpg" width="2560" height="1800" loading="lazy" alt="Configuración del sistema con estado y estadísticas de uso">
+  </section>
+
+  <footer>
+    <span>Andy Menutti</span>
+    <a href="/">andresmenutti.vercel.app</a>
+    <span>WhatsApp +54 11 3455 0050</span>
+    <span>menuttiandres@gmail.com</span>
+  </footer>
+</div>
+<script>
+(() => {
+  const set = (l) => {
+    document.documentElement.lang = l;
+    document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === l)));
+  };
+  document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => {
+    set(b.dataset.lang);
+    try { history.replaceState(null, '', '#' + b.dataset.lang); } catch (e) {}
+  }));
+  set(location.hash === '#en' ? 'en' : 'es');
+})();
+</script>
+</body>
+</html>
