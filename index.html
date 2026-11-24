@@ -608,10 +608,14 @@ footer a:hover { border-color: var(--fg); }
   // ---------- projects ----------
   const GH = 'https://github.com/andym80/';
   const PROJECTS = [
-    { lane: 'civic', title: 'MUX Firmas',
-      en: 'Signature site for the MUX campaign against the cut in scenic-music royalties: the position paper, a signing form and the live list of signers.',
-      es: 'Sitio de firmas para la campaña de MUX contra la baja del arancel de música escénica: el documento, el formulario para firmar y la lista de firmantes en vivo.',
-      stack: ['Next.js', 'v0'], links: [['live', 'https://v0-muxfirmas.vercel.app']] },
+    { lane: 'civic', title: 'Argentina Election Map',
+      en: 'Interactive map of Argentina with the results of the 26 October 2025 legislative elections and the governors in office in 2026. Switch layers and explore district by district.',
+      es: 'Mapa interactivo de Argentina con los resultados de las legislativas del 26 de octubre de 2025 y los gobernadores en ejercicio en 2026. Cambiás de capa y explorás distrito por distrito.',
+      stack: ['Next.js', 'TypeScript', 'Data viz', 'v0'], links: [['live', 'https://argentina-election-map.vercel.app']] },
+    { lane: 'ai', title: 'Pressdiction · Press Manager AI',
+      en: 'Press manager for political campaigns: contacts, campaigns, tracking of every send-out and live LLM analysis of the tone of media coverage.',
+      es: 'Gestor de prensa para campañas políticas: contactos, campañas, seguimiento de cada envío y análisis en vivo con LLM del tono de la cobertura en medios.',
+      stack: ['Next.js', 'TypeScript', 'LLM', 'Google Auth'], links: [['login', 'https://pressdiction.vercel.app']] },
     { lane: 'ai', title: 'AgentMe',
       en: 'Brand agent that reads news and social media inputs with an LLM and proposes communication responses.',
       es: 'Agente de marca que analiza noticias y redes sociales con un LLM y propone respuestas de comunicación.',
@@ -620,10 +624,6 @@ footer a:hover { border-color: var(--fg); }
       en: 'Projects and tasks with status, priority, filters and an agenda grouped by due date. Rails 8 REST API with a Next.js 16 front end, all in Docker.',
       es: 'Proyectos y tareas con estado, prioridad, filtros y una agenda agrupada por vencimiento. API REST en Rails 8 con front en Next.js 16, todo en Docker.',
       stack: ['Rails 8', 'Next.js 16', 'PostgreSQL', 'MUI', 'Docker'], links: [['code', GH + 'TasksRailsApi']] },
-    { lane: 'hw', title: 'QR Art Scanner',
-      en: 'Scan a QR code with the phone camera to launch an augmented-reality art piece in the browser.',
-      es: 'Escaneás un código QR con la cámara del celular y se abre una obra de arte en realidad aumentada en el navegador.',
-      stack: ['Next.js', 'WebAR', 'v0'], links: [['live', 'https://v0-qr-scanner-with-8thwall.vercel.app']] },
     { lane: 'live', title: 'Decadance @ Uniclub',
       en: 'Landing page for an electronic music night in Buenos Aires: animated canvas background, line-up and ticket link.',
       es: 'Landing para una noche de música electrónica en Buenos Aires: fondo animado en canvas, line-up y link a entradas.',
@@ -642,8 +642,8 @@ footer a:hover { border-color: var(--fg); }
       stack: ['React', 'Redux', 'Jest'], links: [['code', GH + 'react-capstone']] },
   ];
   const LINK_LABEL = {
-    en: { live: 'Live demo ↗', code: 'Code ↗', front: 'Front-end code ↗', back: 'Back-end code ↗' },
-    es: { live: 'Ver demo ↗', code: 'Código ↗', front: 'Código front-end ↗', back: 'Código back-end ↗' },
+    en: { live: 'Live demo ↗', login: 'Demo (login required) ↗', code: 'Code ↗', front: 'Front-end code ↗', back: 'Back-end code ↗' },
+    es: { live: 'Ver demo ↗', login: 'Demo (requiere login) ↗', code: 'Código ↗', front: 'Código front-end ↗', back: 'Código back-end ↗' },
   };
   function renderProjects() {
     const grid = document.getElementById('pgrid');
