@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Blue Dreams Tour</title>
+<meta name="description" content="Recorrido visual por Blue Dreams, una app de alquiler de yates hecha en equipo: front en React y Redux, API en Ruby on Rails con login JWT.">
+<meta name="theme-color" content="#0c111d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Same visual system as the multitrack CV: dark desk, AI & protocols lane color as accent. */
+:root {
+  color-scheme: dark;
+  --ink: #0c111d; --panel: #131a2b; --panel-2: #182136; --line: #253050;
+  --fg: #e9edf6; --muted: #93a0bd; --lane: #63a4ff;
+  --f-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--ink); color: var(--fg); font: 15px/1.6 var(--f-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 48px; }
+.wrap { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; }
+a { color: var(--fg); }
+:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; font-family: var(--f-mono); font-size: 0.8rem; }
+.top a { text-decoration: none; border-bottom: 1px solid var(--line); }
+.lang { display: inline-flex; border: 1px solid var(--line); border-radius: 7px; overflow: hidden; }
+.lang button { background: var(--panel-2); color: var(--muted); border: 0; padding: 6px 11px; font: inherit; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--fg); color: var(--ink); }
+.eyebrow { font-family: var(--f-mono); font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lane); display: flex; align-items: center; gap: 8px; }
+.eyebrow::before { content: ""; width: 9px; height: 9px; border-radius: 2px; background: var(--lane); }
+h1 { font-family: var(--f-display); font-weight: 800; font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.02; margin: 6px 0 0; letter-spacing: -0.015em; text-wrap: balance; }
+.lead { color: var(--muted); max-width: 68ch; margin: 0; font-size: 1.02rem; }
+.facts { display: flex; flex-wrap: wrap; gap: 6px; }
+.facts span { font-family: var(--f-mono); font-size: 0.72rem; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--line); }
+.notice { border-left: 3px solid var(--lane); padding: 8px 14px; color: var(--muted); font-size: 0.88rem; margin: 0; max-width: 80ch; }
+.step { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; padding-top: 18px; border-top: 1px solid var(--line); }
+.step header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+.step .n { font-family: var(--f-mono); font-size: 0.74rem; color: var(--muted); letter-spacing: 0.08em; }
+.step h2 { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: 1.35rem; }
+.step p { margin: 0; color: var(--muted); max-width: 75ch; }
+.step img { width: 100%; height: auto; max-width: 100%; display: block; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); }
+footer { border-top: 1px solid var(--line); padding-top: 14px; font-family: var(--f-mono); font-size: 0.78rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 8px 22px; }
+[data-en] { display: none; }
+html[lang="en"] [data-es] { display: none; }
+html[lang="en"] [data-en] { display: revert; }
+.links { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { font-family: var(--f-mono); font-size: 0.82rem; text-decoration: none; padding: 8px 14px; border-radius: 7px; border: 1px solid var(--line); background: var(--panel-2); color: var(--fg); }
+.btn.live { background: var(--lane); border-color: var(--lane); color: var(--ink); font-weight: 500; }
+.btn:hover { border-color: var(--fg); }
+.api { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; }
+.api table { border-collapse: collapse; width: 100%; font-family: var(--f-mono); font-size: 0.82rem; }
+.api td { padding: 7px 14px; border-top: 1px solid var(--line); white-space: nowrap; }
+.api tr:first-child td { border-top: 0; }
+.api td.m { color: var(--lane); width: 1%; }
+.api td.d { color: var(--muted); font-family: var(--f-body); white-space: normal; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a href="/"><span data-es>← Volver al portfolio</span><span data-en>← Back to portfolio</span></a>
+    <div class="lang" role="group" aria-label="Idioma / Language"><button type="button" data-lang="es" aria-pressed="true">ES</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+  </div>
+
+  <header>
+    <span class="eyebrow"><span data-es>Desarrollo full-stack · Tour visual</span><span data-en>Full-stack web · Visual tour</span></span>
+    <h1>Blue Dreams</h1>
+  </header>
+  <p class="lead">
+    <span data-es>App de alquiler de yates hecha por un equipo remoto de cinco personas en Microverse: registro, login, catálogo de barcos y reservas. Front en React con Redux Toolkit y API en Ruby on Rails.</span>
+    <span data-en>A yacht rental app built by a remote team of five at Microverse: sign-up, log-in, a ship catalog and reservations. A React front end with Redux Toolkit and a Ruby on Rails API.</span>
+  </p>
+  <div class="facts"><span>React 18</span><span>Redux Toolkit · RTK Query</span><span>React Router</span><span>Bootstrap 5</span><span>Ruby on Rails 7</span><span>Devise · JWT</span><span>PostgreSQL</span><span>RSpec</span></div>
+  <div class="links">
+    <a class="btn live" href="https://github.com/andym80/blue-dreams-front-end" target="_blank" rel="noopener"><span data-es>Código front-end ↗</span><span data-en>Front-end code ↗</span></a>
+    <a class="btn" href="https://github.com/andym80/blue-dreams-back-end" target="_blank" rel="noopener"><span data-es>Código back-end ↗</span><span data-en>Back-end code ↗</span></a>
+  </div>
+  <p class="notice">
+    <span data-es>El backend original estaba en Heroku y ya no está online, así que estas capturas son de la app corriendo localmente con los datos de ejemplo del repositorio. Las fotos de los barcos usan las imágenes del propio front, porque los links del seed apuntaban a sitios externos.</span>
+    <span data-en>The original back end ran on Heroku and is no longer online, so these screenshots show the app running locally with the repository’s sample data. Ship photos use the front end’s own images, since the seed linked to external sites.</span>
+  </p>
+
+  <section class="step">
+    <header><span class="n">01</span><h2><span data-es>Catálogo de barcos</span><span data-en>Ship catalog</span></h2></header>
+    <p><span data-es>Carrusel con cada yate: modelo, precio, capacidad y si está a la venta. Los datos vienen de la API de Rails a través de RTK Query.</span><span data-en>A carousel of yachts with model, price, capacity and sale status. Data comes from the Rails API through RTK Query.</span></p>
+    <img src="img/catalogo.jpg" width="2560" height="1800" loading="lazy" alt="Catálogo de barcos con un yate, su modelo, precio y capacidad">
+  </section>
+  <section class="step">
+    <header><span class="n">02</span><h2><span data-es>Navegación</span><span data-en>Navigation</span></h2></header>
+    <p><span data-es>Menú lateral de Bootstrap con barcos, reservas, reservar, información y acceso.</span><span data-en>A Bootstrap side menu with ships, reservations, booking, about and log-in.</span></p>
+    <img src="img/menu.jpg" width="2560" height="1800" loading="lazy" alt="Menú lateral abierto con las secciones de la app">
+  </section>
+  <section class="step">
+    <header><span class="n">03</span><h2><span data-es>Registro e inicio de sesión</span><span data-en>Sign up and log-in</span></h2></header>
+    <p><span data-es>Registro y login contra Devise con tokens JWT: el token que devuelve la API se usa en las llamadas protegidas.</span><span data-en>Sign-up and log-in against Devise with JWT tokens: the token returned by the API is sent with protected calls.</span></p>
+    <img src="img/login.jpg" width="2560" height="1800" loading="lazy" alt="Pantalla de registro e inicio de sesión">
+  </section>
+  <section class="step">
+    <header><span class="n">04</span><h2><span data-es>Reservar</span><span data-en>Booking</span></h2></header>
+    <p><span data-es>Políticas y procedimiento de alquiler antes de pasar a reservar.</span><span data-en>Rental policy and procedure before moving on to book.</span></p>
+    <img src="img/reservar.jpg" width="2560" height="1800" loading="lazy" alt="Pantalla de políticas de alquiler con el botón Book now">
+  </section>
+  <section class="step">
+    <header><span class="n">05</span><h2><span data-es>Sobre la empresa</span><span data-en>About</span></h2></header>
+    <p><span data-es>Página institucional de la empresa ficticia.</span><span data-en>An about page for the fictional company.</span></p>
+    <img src="img/about.jpg" width="2560" height="1800" loading="lazy" alt="Página sobre la empresa">
+  </section>
+  <section class="step">
+    <header><span class="n">06</span><h2><span data-es>La API en Rails</span><span data-en>The Rails API</span></h2></header>
+    <p><span data-es>Rails 7 con PostgreSQL, Devise y devise-jwt para la autenticación, y RSpec para los tests.</span><span data-en>Rails 7 with PostgreSQL, Devise and devise-jwt for authentication, and RSpec for tests.</span></p>
+    <div class="api"><table>
+        <tr><td class="m">POST</td><td>/signup</td><td class="d"><span data-es>Registro (Devise)</span><span data-en>Sign up (Devise)</span></td></tr>
+        <tr><td class="m">POST · DELETE</td><td>/login · /logout</td><td class="d"><span data-es>Inicio y cierre de sesión con JWT</span><span data-en>Log in and out with JWT</span></td></tr>
+        <tr><td class="m">GET · POST · DELETE</td><td>/ships/index · create · destroy</td><td class="d"><span data-es>Catálogo de barcos</span><span data-en>Ship catalog</span></td></tr>
+        <tr><td class="m">GET · POST · PUT · DELETE</td><td>/reservations/index · create · update · destroy</td><td class="d"><span data-es>Reservas del usuario</span><span data-en>User reservations</span></td></tr>
+    </table></div>
+  </section>
+
+  <footer>
+    <span>Andy Menutti</span>
+    <a href="/">andresmenutti.vercel.app</a>
+    <span>WhatsApp +54 11 3455 0050</span>
+    <span>menuttiandres@gmail.com</span>
+  </footer>
+</div>
+<script>
+(() => {
+  const set = (l) => {
+    document.documentElement.lang = l;
+    document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === l)));
+  };
+  document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => {
+    set(b.dataset.lang);
+    try { history.replaceState(null, '', '#' + b.dataset.lang); } catch (e) {}
+  }));
+  set(location.hash === '#en' ? 'en' : 'es');
+})();
+</script>
+</body>
+</html>
